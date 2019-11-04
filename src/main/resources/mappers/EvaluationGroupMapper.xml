@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cse.haste.repository.EvaluationGroupRepository">
+
+    <resultMap id="evaluationGroupMap" type="com.cse.haste.model.pojo.EvaluationGroup">
+        <id column="id" property="id"/>
+        <!--<collection column="id" property="candidateList" fetchType="lazy"-->
+                    <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.Candidate"-->
+                    <!--select="com.cse.haste.repository.CandidateRepository.findAllByGroup">-->
+            <!--<id property="id" column="id"/>-->
+        <!--</collection>-->
+        <!--<collection column="id" property="judgeList" fetchType="lazy"-->
+                    <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.User"-->
+                    <!--select="com.cse.haste.repository.UserRepository.findJudgesByGroup">-->
+            <!--<id property="id" column="id"/>-->
+        <!--</collection>-->
+    </resultMap>
+
+    <sql id="cse_evaluation_group_column">
+        id, status, name, complete, evaluation_plan_id, evaluation_plan_name
+    </sql>
+
+    <!-- 保存 -->
+    <insert id="save" parameterType="evaluationGroup" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cse_evaluation_group(object_id, status, create_at, update_at, name, complete, evaluation_plan_id, evaluation_plan_name)
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{name}, #{complete}, #{evaluationPlan.id}, #{evaluationPlan.name})
+    </insert>
+
+    <!-- 删除 -->
+    <update id="delete" parameterType="int">
+        UPDATE cse_evaluation_group SET status = 0, update_at = NOW() WHERE id = #{id}
+    </update>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="evaluationGroup">
+        UPDATE cse_evaluation_group
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="complete != null">complete = #{complete},</if>
+            update_at = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据ID查询考核评审工作组 -->
+    <select id="findOneById" parameterType="int" resultType="evaluationGroup">
+        SELECT
+        <include refid="cse_evaluation_group_column"/>
+        FROM cse_evaluation_group WHERE status = 1 AND id = #{id}
+    </select>
+
+    <!-- 根据考核评价计划查询所有的考核评价工作组 -->
+    <select id="findAllByEvaluationPlanId" parameterType="int" resultType="evaluationGroup">
+        SELECT
+        <include refid="cse_evaluation_group_column"/>
+        FROM cse_evaluation_group WHERE status = 1 AND evaluation_plan_id = #{evaluationPlanId}
+    </select>
+
+</mapper>

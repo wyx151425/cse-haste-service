@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cse.haste.repository.ProfessionalScoreFormRepository">
+
+    <sql id="cse_professional_score_form_column">
+        id, status, complete, moral_1, moral_2, quality_1, quality_2, quality_3,
+        ability_1, ability_2, ability_3, performance_1, performance_2, performance_3,
+        evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
+    </sql>
+
+    <!-- 保存 -->
+    <insert id="save" parameterType="user" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cse_professional_score_form(object_id, status, create_at, update_at, complete,
+            moral_1, moral_2, quality_1, quality_2, quality_3,
+            ability_1, ability_2, ability_3, performance_1, performance_2, performance_3,
+            evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name)
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{complete},
+            #{moral1}, #{moral2}, #{quality1}, #{quality2}, #{quality3},
+            #{ability1}, #{ability2}, #{ability3}, #{performance1}, #{performance2}, #{performance3},
+            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.name}, #{evaluatee.id}, #{evaluatee.name})
+    </insert>
+
+    <!-- 删除 -->
+    <update id="delete" parameterType="int">
+        UPDATE cse_professional_score_form SET status = 0, update_at = NOW() WHERE id = #{id}
+    </update>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="professionalScoreForm">
+        UPDATE cse_professional_score_form
+        <set>
+            <if test="complete != null">complete = #{complete},</if>
+            <if test="moral1 != null">moral_1 = #{moral1},</if>
+            <if test="moral2 != null">moral_2 = #{moral2},</if>
+            <if test="quality1 != null">quality_1 = #{quality1},</if>
+            <if test="quality2 != null">quality_2 = #{quality2},</if>
+            <if test="quality3 != null">quality_3 = #{quality3},</if>
+            <if test="ability1 != null">ability_1 = #{ability1},</if>
+            <if test="ability2 != null">ability_2 = #{ability2},</if>
+            <if test="ability3 != null">ability_3 = #{ability3},</if>
+            <if test="performance1 != null">performance_1 = #{performance1},</if>
+            <if test="performance2 != null">performance_2 = #{performance2},</if>
+            <if test="performance3 != null">performance_3 = #{performance3},</if>
+            update_at = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findOneById" parameterType="int" resultType="professionalScoreForm">
+        SELECT
+        <include refid="cse_professional_score_form_column"/>
+        FROM cse_professional_score_form WHERE status = 1 AND id = #{id}
+    </select>
+
+    <select id="findAllByEvaluationGroupId" parameterType="int" resultType="professionalScoreForm">
+        SELECT
+        <include refid="cse_professional_score_form_column"/>
+        FROM cse_professional_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+    </select>
+
+    <select id="findAllByEvaluatorId" parameterType="int" resultType="professionalScoreForm">
+        SELECT
+        <include refid="cse_professional_score_form_column"/>
+        FROM cse_professional_score_form WHERE status = 1 AND evaluator_id = #{evaluatorId}
+    </select>
+
+    <select id="findAllByEvaluationGroupIdAndEvaluatorId" resultType="professionalScoreForm">
+        SELECT
+        <include refid="cse_professional_score_form_column"/>
+        FROM cse_professional_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND evaluator_id = #{evaluatorId}
+    </select>
+
+</mapper>

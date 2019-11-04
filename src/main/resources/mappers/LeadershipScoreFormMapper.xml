@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cse.haste.repository.LeadershipScoreFormRepository">
+
+    <sql id="cse_leadership_score_form_column">
+        id, status, complete, politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
+        ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4, work_performance_1, work_performance_2,
+        integrity_1, integrity_2, integrity_3, evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name
+    </sql>
+
+    <!-- 保存 -->
+    <insert id="save" parameterType="leadershipScoreForm" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cse_leadership_score_form(object_id, status, create_at, update_at, complete,
+            politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
+            ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4,
+            work_performance_1, work_performance_2, integrity_1, integrity_2, integrity_3,
+            evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name)
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{complete},
+            #{politicsPerformance1}, #{politicsPerformance2}, #{politicsPerformance3}, #{politicsPerformance4}, #{politicsPerformance5},
+            #{abilityAndQuality1}, #{abilityAndQuality2}, #{abilityAndQuality3}, #{abilityAndQuality4},
+            #{workPerformance1}, #{workPerformance2}, #{integrity1}, #{integrity2}, #{integrity3},
+            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.name})
+    </insert>
+
+    <!-- 删除 -->
+    <update id="delete" parameterType="int">
+        UPDATE cse_leadership_score_form SET status = 0, update_at = NOW() WHERE id = #{id}
+    </update>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="leadershipScoreForm">
+        UPDATE cse_leadership_score_form
+        <set>
+            <if test="complete != null">complete = #{complete},</if>
+            <if test="politicsPerformance1 != null">politics_performance_1 = #{politicsPerformance1},</if>
+            <if test="politicsPerformance2 != null">politics_performance_2 = #{politicsPerformance2},</if>
+            <if test="politicsPerformance3 != null">politics_performance_3 = #{politicsPerformance3},</if>
+            <if test="politicsPerformance4 != null">politics_performance_4 = #{politicsPerformance4},</if>
+            <if test="politicsPerformance5 != null">politics_performance_5 = #{politicsPerformance5},</if>
+            <if test="abilityAndQuality1 != null">ability_and_quality_1 = #{abilityAndQuality1},</if>
+            <if test="abilityAndQuality2 != null">ability_and_quality_2 = #{abilityAndQuality2},</if>
+            <if test="abilityAndQuality3 != null">ability_and_quality_3 = #{abilityAndQuality3},</if>
+            <if test="abilityAndQuality4 != null">ability_and_quality_4 = #{abilityAndQuality4},</if>
+            <if test="workPerformance1 != null">work_performance_1 = #{workPerformance1},</if>
+            <if test="workPerformance2 != null">work_performance_2 = #{workPerformance2},</if>
+            <if test="integrity1 != null">integrity_1 = #{integrity1},</if>
+            <if test="integrity2 != null">integrity_2 = #{integrity2},</if>
+            <if test="integrity3 != null">integrity_3 = #{integrity3},</if>
+            update_at = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findOneById" parameterType="int" resultType="leadershipScoreForm">
+        SELECT
+        <include refid="cse_leadership_score_form_column"/>
+        FROM cse_leadership_score_form WHERE status = 1 AND id = #{id}
+    </select>
+
+    <select id="findAllByEvaluationGroupId" parameterType="int" resultType="leadershipScoreForm">
+        SELECT
+        <include refid="cse_leadership_score_form_column"/>
+        FROM cse_leadership_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+    </select>
+
+    <select id="findAllByEvaluatorId" parameterType="int" resultType="leadershipScoreForm">
+        SELECT
+        <include refid="cse_leadership_score_form_column"/>
+        FROM cse_leadership_score_form WHERE status = 1 AND evaluator_id = #{evaluatorId}
+    </select>
+
+    <select id="findAllByEvaluationGroupIdAndEvaluatorId" resultType="leadershipScoreForm">
+        SELECT
+        <include refid="cse_leadership_score_form_column"/>
+        FROM cse_leadership_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND evaluator_id = #{evaluatorId}
+    </select>
+
+</mapper>

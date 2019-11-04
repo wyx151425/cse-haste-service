@@ -1,0 +1,30 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.10.20.103:3306/cse_haste_pro?characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: dms01
+    password: Cse@dms01
+
+mybatis:
+  configuration:
+    use-generated-keys: true
+    use-column-label: true
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.cse.haste.model.pojo
+  mapper-locations: classpath:mappers/*.xml
+
+logging:
+  level:
+    com.cse.aries.repository: debug
+
+ftp:
+  server:
+    ip: 10.10.20.103
+    username: wyx151425
+    password: 151425
+http:
+  file-prefix: https://tess.cse.com.cn/aries/
