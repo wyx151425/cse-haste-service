@@ -28,6 +28,11 @@
         UPDATE cse_evaluatee SET status = 0, update_at = NOW() WHERE id = #{id}
     </update>
 
+    <!-- 根据ID查询受评者 -->
+    <select id="findOneById" parameterType="int" resultMap="evaluateeMap">
+        SELECT <include refid="cse_evaluatee_column"/> FROM cse_evaluatee WHERE status = 1 AND id = #{id}
+    </select>
+
     <!-- 根据考核评价工作组查询受评者 -->
     <select id="findAllByEvaluationGroupId" parameterType="int" resultMap="evaluateeMap">
         SELECT <include refid="cse_evaluatee_column"/> FROM cse_evaluatee WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}

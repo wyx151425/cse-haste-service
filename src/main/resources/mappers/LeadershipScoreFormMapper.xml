@@ -6,7 +6,7 @@
     <sql id="cse_leadership_score_form_column">
         id, status, complete, politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
         ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4, work_performance_1, work_performance_2,
-        integrity_1, integrity_2, integrity_3, evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name
+        integrity_1, integrity_2, integrity_3, evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
     </sql>
 
     <!-- 保存 -->
@@ -15,12 +15,12 @@
             politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
             ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4,
             work_performance_1, work_performance_2, integrity_1, integrity_2, integrity_3,
-            evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name)
+            evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name)
         VALUES(#{objectId}, #{status}, NOW(), NOW(), #{complete},
             #{politicsPerformance1}, #{politicsPerformance2}, #{politicsPerformance3}, #{politicsPerformance4}, #{politicsPerformance5},
             #{abilityAndQuality1}, #{abilityAndQuality2}, #{abilityAndQuality3}, #{abilityAndQuality4},
             #{workPerformance1}, #{workPerformance2}, #{integrity1}, #{integrity2}, #{integrity3},
-            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.name})
+            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.name}, #{evaluatee.id}, #{evaluatee.name})
     </insert>
 
     <!-- 删除 -->

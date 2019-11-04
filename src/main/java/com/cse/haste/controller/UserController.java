@@ -29,7 +29,7 @@ public class UserController extends HasteFacade {
     }
 
     @PostMapping(value = "users/login")
-    public Response<User> actionLogin(@RequestBody User requestUser) {
+    public Response<User> actionUserLogin(@RequestBody User requestUser) {
         User user = userService.login(requestUser);
         setCurrentUser(user);
         return new Response<>(user);
@@ -42,7 +42,7 @@ public class UserController extends HasteFacade {
     }
 
     @PostMapping(value = "users/import")
-    public Response<List<User>> actionImportJudgeListByFile(@RequestParam(value = "file") MultipartFile file) {
+    public Response<List<User>> actionImportUsersByFile(@RequestParam(value = "file") MultipartFile file) {
         User user = getCurrentUser();
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
@@ -60,7 +60,7 @@ public class UserController extends HasteFacade {
     }
 
     @DeleteMapping(value = "users/{id}/disable")
-    public Response<User> actionDisableJudge(@PathVariable(value = "id") Integer id) {
+    public Response<User> actionDisableUser(@PathVariable(value = "id") Integer id) {
         User user = getCurrentUser();
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);

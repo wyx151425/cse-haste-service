@@ -5,6 +5,13 @@
 
     <resultMap id="evaluationGroupMap" type="com.cse.haste.model.pojo.EvaluationGroup">
         <id column="id" property="id"/>
+        <result column="evaluation_plan_id" property="evaluationPlanId"/>
+        <result column="evaluation_plan_name" property="evaluationPlanName"/>
+        <association column="evaluation_plan_id" property="evaluationPlan" fetchType="lazy"
+                     javaType="com.cse.haste.model.pojo.EvaluationPlan"
+                     select="com.cse.haste.repository.EvaluationPlanRepository.findOneById">
+            <id column="id" property="id"/>
+        </association>
         <!--<collection column="id" property="candidateList" fetchType="lazy"-->
                     <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.Candidate"-->
                     <!--select="com.cse.haste.repository.CandidateRepository.findAllByGroup">-->
@@ -44,7 +51,7 @@
     </update>
 
     <!-- 根据ID查询考核评审工作组 -->
-    <select id="findOneById" parameterType="int" resultType="evaluationGroup">
+    <select id="findOneById" parameterType="int" resultMap="evaluationGroupMap">
         SELECT
         <include refid="cse_evaluation_group_column"/>
         FROM cse_evaluation_group WHERE status = 1 AND id = #{id}

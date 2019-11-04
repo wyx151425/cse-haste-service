@@ -36,11 +36,12 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveEvaluationGroup(EvaluationGroup evaluationGroup) {
+    public EvaluationGroup saveEvaluationGroup(EvaluationGroup evaluationGroup) {
         evaluationGroup.setObjectId(GeneratorUtil.getObjectId());
         evaluationGroup.setStatus(Constant.Status.ENABLED);
         evaluationGroup.setComplete(false);
         evaluationGroupRepository.save(evaluationGroup);
+        return evaluationGroupRepository.findOneById(evaluationGroup.getId());
     }
 
     @Override

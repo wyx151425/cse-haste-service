@@ -33,8 +33,8 @@ public class EvaluationGroupController extends HasteFacade {
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
         }
-        evaluationGroupService.saveEvaluationGroup(evaluationGroup);
-        return new Response<>(evaluationGroup);
+        EvaluationGroup newEvaluationGroup = evaluationGroupService.saveEvaluationGroup(evaluationGroup);
+        return new Response<>(newEvaluationGroup);
     }
 
     @DeleteMapping(value = "evaluationGroups/{id}")

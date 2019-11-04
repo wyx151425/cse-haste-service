@@ -91,6 +91,8 @@ CREATE TABLE `cse_leadership_score_form` (
   `integrity_3` int(2),
   `evaluator_id` int(11),
   `evaluator_name` varchar(8),
+  `evaluatee_id` int(11),
+  `evaluatee_name` varchar(8),
   `evaluation_group_id` int(11),
   `evaluation_group_name` varchar(32),
   PRIMARY KEY (`id`)

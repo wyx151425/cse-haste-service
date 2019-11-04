@@ -13,8 +13,9 @@ public interface EvaluationGroupService {
      * 保存考核评价工作组
      *
      * @param evaluationGroup 考核评价工作组
+     * @return 保存后的考核评价工作组
      */
-    void saveEvaluationGroup(EvaluationGroup evaluationGroup);
+    EvaluationGroup saveEvaluationGroup(EvaluationGroup evaluationGroup);
 
     /**
      * 初始化考核评价工作组

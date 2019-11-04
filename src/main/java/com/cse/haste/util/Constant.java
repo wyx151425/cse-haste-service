@@ -37,9 +37,9 @@ public class Constant {
         }
 
         public static class Stages {
-            public static final int INITIALIZE = 0;
-            public static final int STARTED = 1;
-            public static final int COMPLETED = 2;
+            public static final int INITIALIZE = 100;
+            public static final int STARTED = 200;
+            public static final int COMPLETED = 300;
         }
     }
 }

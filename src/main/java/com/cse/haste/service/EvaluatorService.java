@@ -9,6 +9,21 @@ import java.util.List;
  */
 public interface EvaluatorService {
     /**
+     * 保存评价者
+     *
+     * @param evaluator 评价者
+     * @return 保存后的受评
+     */
+    Evaluator saveEvaluator(Evaluator evaluator);
+
+    /**
+     * 删除评价者
+     *
+     * @param id 评价者ID
+     */
+    void deleteEvaluator(Integer id);
+
+    /**
      * 根据考核评价计划组删除评价者
      *
      * @param evaluationGroupId 考核评价工作组ID

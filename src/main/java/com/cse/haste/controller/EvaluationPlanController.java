@@ -32,8 +32,8 @@ public class EvaluationPlanController extends HasteFacade {
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
         }
-        evaluationPlanService.saveEvaluationPlan(evaluationPlan);
-        return new Response<>(evaluationPlan);
+        EvaluationPlan newEvaluationPlan = evaluationPlanService.saveEvaluationPlan(evaluationPlan);
+        return new Response<>(newEvaluationPlan);
     }
 
     @DeleteMapping(value = "evaluationPlans/{id}")
@@ -52,8 +52,8 @@ public class EvaluationPlanController extends HasteFacade {
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
         }
-        evaluationPlanService.startEvaluationPlan(id);
-        return new Response<>();
+        EvaluationPlan evaluationPlan = evaluationPlanService.startEvaluationPlan(id);
+        return new Response<>(evaluationPlan);
     }
 
     @PutMapping(value = "evaluationPlans/{id}/submit")
@@ -62,8 +62,8 @@ public class EvaluationPlanController extends HasteFacade {
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
         }
-        evaluationPlanService.submitEvaluationPlan(id);
-        return new Response<>();
+        EvaluationPlan evaluationPlan = evaluationPlanService.submitEvaluationPlan(id);
+        return new Response<>(evaluationPlan);
     }
 
     @GetMapping(value = "evaluationPlans")

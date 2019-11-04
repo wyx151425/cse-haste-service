@@ -12,8 +12,9 @@ public interface EvaluationPlanService {
      * 保存考核评价计划
      *
      * @param evaluationPlan 考核评价计划
+     * @return 保存后的考核评价计划
      */
-    void saveEvaluationPlan(EvaluationPlan evaluationPlan);
+    EvaluationPlan saveEvaluationPlan(EvaluationPlan evaluationPlan);
 
     /**
      * 删除考核评价计划
@@ -26,15 +27,17 @@ public interface EvaluationPlanService {
      * 启动考核评价计划
      *
      * @param id 考核评价计划ID
+     * @return 启动后的考核评价计划
      */
-    void startEvaluationPlan(Integer id);
+    EvaluationPlan startEvaluationPlan(Integer id);
 
     /**
      * 完成考核评价计划
      *
      * @param id 考核评价计划ID
+     * @return 提交后的考核评价计划
      */
-    void submitEvaluationPlan(Integer id);
+    EvaluationPlan submitEvaluationPlan(Integer id);
 
     /**
      * 查询所有的考核评价计划

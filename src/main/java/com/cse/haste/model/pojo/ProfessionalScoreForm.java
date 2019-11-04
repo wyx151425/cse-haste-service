@@ -12,12 +12,6 @@ import java.time.LocalDateTime;
  */
 public class ProfessionalScoreForm extends EvaluationScoreForm {
     /**
-     * 受评者
-     */
-    private Integer evaluateeId;
-    private String evaluateeName;
-    private Evaluatee evaluatee;
-    /**
      * 价值观
      */
     private Integer moral1;
@@ -74,30 +68,6 @@ public class ProfessionalScoreForm extends EvaluationScoreForm {
         professionalScoreForm.setUpdateAt(dateTime);
         professionalScoreForm.setComplete(false);
         return professionalScoreForm;
-    }
-
-    public Integer getEvaluateeId() {
-        return evaluateeId;
-    }
-
-    public void setEvaluateeId(Integer evaluateeId) {
-        this.evaluateeId = evaluateeId;
-    }
-
-    public String getEvaluateeName() {
-        return evaluateeName;
-    }
-
-    public void setEvaluateeName(String evaluateeName) {
-        this.evaluateeName = evaluateeName;
-    }
-
-    public Evaluatee getEvaluatee() {
-        return evaluatee;
-    }
-
-    public void setEvaluatee(Evaluatee evaluatee) {
-        this.evaluatee = evaluatee;
     }
 
     public Integer getMoral1() {

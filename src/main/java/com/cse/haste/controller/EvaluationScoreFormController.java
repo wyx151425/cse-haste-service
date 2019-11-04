@@ -1,16 +1,14 @@
 package com.cse.haste.controller;
 
 import com.cse.haste.model.dto.Response;
-import com.cse.haste.model.pojo.LeaderCadreScoreForm;
-import com.cse.haste.model.pojo.LeadershipScoreForm;
-import com.cse.haste.model.pojo.ProfessionalScoreForm;
-import com.cse.haste.model.pojo.User;
+import com.cse.haste.model.pojo.*;
 import com.cse.haste.service.LeaderCadreScoreFormService;
 import com.cse.haste.service.LeadershipScoreFormService;
 import com.cse.haste.service.ProfessionalScoreFormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,5 +81,17 @@ public class EvaluationScoreFormController extends HasteFacade {
     public Response<List<ProfessionalScoreForm>> actionQueryProfessionalScoreFormByEvaluator(@PathVariable(value = "evaluatorId") Integer evaluatorId) {
         List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormService.findProfessionalScoreFormsByEvaluator(evaluatorId);
         return new Response<>(professionalScoreForms);
+    }
+
+    @GetMapping(value = "evaluators/{evaluatorId}/evaluationScoreForms")
+    public Response<List<EvaluationScoreForm>> actionQueryEvaluationScoreFormsByEvaluator(@PathVariable(value = "evaluatorId") Integer evaluatorId) {
+        List<LeadershipScoreForm> leadershipScoreForms = leadershipScoreFormService.findLeadershipScoreFormsByEvaluator(evaluatorId);
+        List<LeaderCadreScoreForm> leaderCadreScoreForms = leaderCadreScoreFormService.findLeaderCadreScoreFormsByEvaluator(evaluatorId);
+        List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormService.findProfessionalScoreFormsByEvaluator(evaluatorId);
+        List<EvaluationScoreForm> evaluationScoreForms = new ArrayList<>();
+        evaluationScoreForms.addAll(leadershipScoreForms);
+        evaluationScoreForms.addAll(leaderCadreScoreForms);
+        evaluationScoreForms.addAll(professionalScoreForms);
+        return new Response<>(evaluationScoreForms);
     }
 }

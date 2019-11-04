@@ -12,12 +12,6 @@ import java.time.LocalDateTime;
  */
 public class LeaderCadreScoreForm extends EvaluationScoreForm {
     /**
-     * 受评者
-     */
-    private Integer evaluateeId;
-    private String evaluateeName;
-    private Evaluatee evaluatee;
-    /**
      * 政治忠诚
      */
     private Integer politicsPerformance1;
@@ -86,30 +80,6 @@ public class LeaderCadreScoreForm extends EvaluationScoreForm {
         leaderCadreScoreForm.setUpdateAt(dateTime);
         leaderCadreScoreForm.setComplete(true);
         return leaderCadreScoreForm;
-    }
-
-    public Integer getEvaluateeId() {
-        return evaluateeId;
-    }
-
-    public void setEvaluateeId(Integer evaluateeId) {
-        this.evaluateeId = evaluateeId;
-    }
-
-    public String getEvaluateeName() {
-        return evaluateeName;
-    }
-
-    public void setEvaluateeName(String evaluateeName) {
-        this.evaluateeName = evaluateeName;
-    }
-
-    public Evaluatee getEvaluatee() {
-        return evaluatee;
-    }
-
-    public void setEvaluatee(Evaluatee evaluatee) {
-        this.evaluatee = evaluatee;
     }
 
     public Integer getPoliticsPerformance1() {

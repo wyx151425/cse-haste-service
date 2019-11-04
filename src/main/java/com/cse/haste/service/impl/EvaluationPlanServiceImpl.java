@@ -30,11 +30,12 @@ public class EvaluationPlanServiceImpl implements EvaluationPlanService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveEvaluationPlan(EvaluationPlan evaluationPlan) {
+    public EvaluationPlan saveEvaluationPlan(EvaluationPlan evaluationPlan) {
         evaluationPlan.setObjectId(GeneratorUtil.getObjectId());
         evaluationPlan.setStatus(Constant.Status.ENABLED);
         evaluationPlan.setStage(Constant.EvaluationPlan.Stages.INITIALIZE);
         evaluationPlanRepository.save(evaluationPlan);
+        return evaluationPlanRepository.findOneById(evaluationPlan.getId());
     }
 
     @Override
@@ -46,22 +47,23 @@ public class EvaluationPlanServiceImpl implements EvaluationPlanService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void startEvaluationPlan(Integer id) {
+    public EvaluationPlan startEvaluationPlan(Integer id) {
         EvaluationPlan evaluationPlan = evaluationPlanRepository.findOneById(id);
         evaluationPlan.setStage(Constant.EvaluationPlan.Stages.STARTED);
         evaluationPlan.setStartAt(LocalDateTime.now().withNano(0));
         evaluationPlanRepository.update(evaluationPlan);
-
         evaluationGroupService.initializeEvaluationGroupsByEvaluationPlan(evaluationPlan);
+        return evaluationPlanRepository.findOneById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void submitEvaluationPlan(Integer id) {
+    public EvaluationPlan submitEvaluationPlan(Integer id) {
         EvaluationPlan evaluationPlan = evaluationPlanRepository.findOneById(id);
         evaluationPlan.setStage(Constant.EvaluationPlan.Stages.COMPLETED);
         evaluationPlan.setCompleteAt(LocalDateTime.now().withNano(0));
         evaluationPlanRepository.update(evaluationPlan);
+        return evaluationPlanRepository.findOneById(id);
     }
 
     @Override

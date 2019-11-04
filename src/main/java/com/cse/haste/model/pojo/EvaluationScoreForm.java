@@ -11,6 +11,12 @@ public class EvaluationScoreForm extends HasteEntity {
      */
     private Boolean complete;
     /**
+     * 受评者
+     */
+    private Integer evaluateeId;
+    private String evaluateeName;
+    private Evaluatee evaluatee;
+    /**
      * 评价者
      */
     private Integer evaluatorId;
@@ -32,6 +38,30 @@ public class EvaluationScoreForm extends HasteEntity {
 
     public void setComplete(Boolean complete) {
         this.complete = complete;
+    }
+
+    public Integer getEvaluateeId() {
+        return evaluateeId;
+    }
+
+    public void setEvaluateeId(Integer evaluateeId) {
+        this.evaluateeId = evaluateeId;
+    }
+
+    public String getEvaluateeName() {
+        return evaluateeName;
+    }
+
+    public void setEvaluateeName(String evaluateeName) {
+        this.evaluateeName = evaluateeName;
+    }
+
+    public Evaluatee getEvaluatee() {
+        return evaluatee;
+    }
+
+    public void setEvaluatee(Evaluatee evaluatee) {
+        this.evaluatee = evaluatee;
     }
 
     public Integer getEvaluatorId() {
