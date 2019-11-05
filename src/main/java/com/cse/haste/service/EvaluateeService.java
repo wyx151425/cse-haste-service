@@ -1,6 +1,7 @@
 package com.cse.haste.service;
 
 import com.cse.haste.model.pojo.Evaluatee;
+import com.cse.haste.model.pojo.User;
 
 import java.util.List;
 
@@ -37,4 +38,12 @@ public interface EvaluateeService {
      * @return 受评者数据集合
      */
     List<Evaluatee> findEvaluateesByEvaluationGroup(Integer evaluationGroupId);
+
+    /**
+     * 查询未选择的受评者
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @return 未选择的受评者数据集合
+     */
+    List<User> findNotSelectEvaluateesByEvaluationGroup(Integer evaluationGroupId);
 }

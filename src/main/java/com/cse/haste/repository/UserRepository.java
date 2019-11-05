@@ -1,6 +1,7 @@
 package com.cse.haste.repository;
 
 import com.cse.haste.model.pojo.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,12 @@ public interface UserRepository extends HasteRepository<User, Integer> {
      * @return 用户数据集合
      */
     List<User> findAllByRole(String role);
+
+    /**
+     * 查询ID不在ID数组中的用户
+     *
+     * @param ids ID数组
+     * @return 用户数据集合
+     */
+    List<User> findAllByIdNotIn(@Param(value = "ids") List<Integer> ids);
 }

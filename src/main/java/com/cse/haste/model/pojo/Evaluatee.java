@@ -1,5 +1,10 @@
 package com.cse.haste.model.pojo;
 
+import com.cse.haste.util.Constant;
+import com.cse.haste.util.GeneratorUtil;
+
+import java.time.LocalDateTime;
+
 /**
  * 受评者
  *
@@ -26,6 +31,16 @@ public class Evaluatee extends HasteEntity {
     private EvaluationGroup evaluationGroup;
 
     public Evaluatee() {
+    }
+
+    public static Evaluatee newInstance() {
+        Evaluatee evaluatee = new Evaluatee();
+        evaluatee.setObjectId(GeneratorUtil.getObjectId());
+        evaluatee.setStatus(Constant.Status.ENABLED);
+        LocalDateTime dateTime = LocalDateTime.now().withNano(0);
+        evaluatee.setCreateAt(dateTime);
+        evaluatee.setUpdateAt(dateTime);
+        return evaluatee;
     }
 
     public Integer getUserId() {

@@ -66,8 +66,14 @@ public class EvaluationPlanController extends HasteFacade {
         return new Response<>(evaluationPlan);
     }
 
+    @GetMapping(value = "evaluationPlans/{id}")
+    public Response<EvaluationPlan> actionQueryEvaluationPlanById(@PathVariable(value = "id") Integer id) {
+        EvaluationPlan evaluationPlan = evaluationPlanService.findEvaluationPlanById(id);
+        return new Response<>(evaluationPlan);
+    }
+
     @GetMapping(value = "evaluationPlans")
-    public Response<List<EvaluationPlan>> actionQueryPlanList() {
+    public Response<List<EvaluationPlan>> actionQueryEvaluationPlanList() {
         List<EvaluationPlan> evaluationPlanList = evaluationPlanService.findEvaluationPlans();
         return new Response<>(evaluationPlanList);
     }

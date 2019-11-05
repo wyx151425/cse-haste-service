@@ -45,4 +45,12 @@ public interface EvaluationPlanService {
      * @return 考核评价计划
      */
     List<EvaluationPlan> findEvaluationPlans();
+
+    /**
+     * 根据ID查询考核评价计划
+     *
+     * @param id 考核评价计划ID
+     * @return 考核评价计划
+     */
+    EvaluationPlan findEvaluationPlanById(Integer id);
 }

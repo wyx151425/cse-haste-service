@@ -1,5 +1,7 @@
 package com.cse.haste.model.pojo;
 
+import java.time.LocalDateTime;
+
 /**
  * 考核评价评分表
  *
@@ -7,9 +9,14 @@ package com.cse.haste.model.pojo;
  */
 public class EvaluationScoreForm extends HasteEntity {
     /**
+     * 类型
+     */
+    private Integer type;
+    /**
      * 完成标志
      */
     private Boolean complete;
+    private LocalDateTime completeAt;
     /**
      * 受评者
      */
@@ -32,12 +39,28 @@ public class EvaluationScoreForm extends HasteEntity {
     public EvaluationScoreForm() {
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public Boolean getComplete() {
         return complete;
     }
 
     public void setComplete(Boolean complete) {
         this.complete = complete;
+    }
+
+    public LocalDateTime getCompleteAt() {
+        return completeAt;
+    }
+
+    public void setCompleteAt(LocalDateTime completeAt) {
+        this.completeAt = completeAt;
     }
 
     public Integer getEvaluateeId() {

@@ -54,6 +54,7 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
             if (Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN == evaluationPlan.getType()) {
                 for (Evaluator evaluator : evaluators) {
                     LeadershipScoreForm leadershipScoreForm = LeadershipScoreForm.newInstance();
+                    leadershipScoreForm.setType(Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN);
                     leadershipScoreForm.setEvaluationGroup(evaluationGroup);
                     leadershipScoreForm.setEvaluator(evaluator);
                     leadershipScoreFormService.saveLeadershipScoreForm(leadershipScoreForm);
@@ -63,6 +64,7 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
                     for (Evaluator evaluator : evaluators) {
                         if (Constant.EvaluationPlan.Types.LEADER_CADRE_EVALUATION_PLAN == evaluationPlan.getType()) {
                             LeaderCadreScoreForm leaderCadreScoreForm = LeaderCadreScoreForm.newInstance();
+                            leaderCadreScoreForm.setType(Constant.EvaluationPlan.Types.LEADER_CADRE_EVALUATION_PLAN);
                             leaderCadreScoreForm.setEvaluationGroup(evaluationGroup);
                             leaderCadreScoreForm.setEvaluatee(evaluatee);
                             leaderCadreScoreForm.setEvaluator(evaluator);
@@ -70,6 +72,7 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
                         }
                         if (Constant.EvaluationPlan.Types.PROFESSIONAL_EVALUATION_PLAN == evaluationPlan.getType()) {
                             ProfessionalScoreForm professionalScoreForm = ProfessionalScoreForm.newInstance();
+                            professionalScoreForm.setType(Constant.EvaluationPlan.Types.PROFESSIONAL_EVALUATION_PLAN);
                             professionalScoreForm.setEvaluationGroup(evaluationGroup);
                             professionalScoreForm.setEvaluatee(evaluatee);
                             professionalScoreForm.setEvaluator(evaluator);

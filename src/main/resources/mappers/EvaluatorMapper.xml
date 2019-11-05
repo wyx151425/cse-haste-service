@@ -42,4 +42,11 @@
         FROM cse_evaluator WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
     </select>
 
+    <!-- 根据用户ID查询评价者 -->
+    <select id="findAllByUserId" parameterType="int" resultMap="evaluatorMap">
+        SELECT
+        <include refid="cse_evaluator_column"/>
+        FROM cse_evaluator WHERE status = 1 AND user_id = #{userId}
+    </select>
+
 </mapper>

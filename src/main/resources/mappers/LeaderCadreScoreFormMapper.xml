@@ -4,23 +4,23 @@
 <mapper namespace="com.cse.haste.repository.LeaderCadreScoreFormRepository">
 
     <sql id="cse_leader_cadre_score_form_column">
-        id, status, complete, politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
+        id, status, type, complete, complete_at, politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
         ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4, work_performance_1, work_performance_2,
         integrity_1, integrity_2, integrity_3, evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
     </sql>
 
     <!-- 保存 -->
     <insert id="save" parameterType="leaderCadreScoreForm" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cse_leader_cadre_score_form(object_id, status, create_at, update_at, complete,
+        INSERT INTO cse_leader_cadre_score_form(object_id, status, create_at, update_at, type, complete, complete_at,
             politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
             ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4,
             work_performance_1, work_performance_2, integrity_1, integrity_2, integrity_3,
             evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name)
-        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{complete},
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{type}, #{complete}, #{completeAt},
             #{politicsPerformance1}, #{politicsPerformance2}, #{politicsPerformance3}, #{politicsPerformance4}, #{politicsPerformance5},
             #{abilityAndQuality1}, #{abilityAndQuality2}, #{abilityAndQuality3}, #{abilityAndQuality4},
             #{workPerformance1}, #{workPerformance2}, #{integrity1}, #{integrity2}, #{integrity3},
-            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.name}, #{evaluatee.id}, #{evaluatee.name})
+            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.userName}, #{evaluatee.id}, #{evaluatee.userName})
     </insert>
 
     <!-- 删除 -->
@@ -33,6 +33,7 @@
         UPDATE cse_leader_cadre_score_form
         <set>
             <if test="complete != null">complete = #{complete},</if>
+            <if test="completeAt != null">complete_at = #{completeAt},</if>
             <if test="politicsPerformance1 != null">politics_performance_1 = #{politicsPerformance1},</if>
             <if test="politicsPerformance2 != null">politics_performance_2 = #{politicsPerformance2},</if>
             <if test="politicsPerformance3 != null">politics_performance_3 = #{politicsPerformance3},</if>

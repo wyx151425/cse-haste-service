@@ -4,21 +4,21 @@
 <mapper namespace="com.cse.haste.repository.ProfessionalScoreFormRepository">
 
     <sql id="cse_professional_score_form_column">
-        id, status, complete, moral_1, moral_2, quality_1, quality_2, quality_3,
+        id, status, type, complete, complete_at, moral_1, moral_2, quality_1, quality_2, quality_3,
         ability_1, ability_2, ability_3, performance_1, performance_2, performance_3,
         evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
     </sql>
 
     <!-- 保存 -->
     <insert id="save" parameterType="user" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cse_professional_score_form(object_id, status, create_at, update_at, complete,
+        INSERT INTO cse_professional_score_form(object_id, status, create_at, update_at, type, complete, complete_at,
             moral_1, moral_2, quality_1, quality_2, quality_3,
             ability_1, ability_2, ability_3, performance_1, performance_2, performance_3,
             evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name)
-        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{complete},
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{type}, #{complete}, #{completeAt},
             #{moral1}, #{moral2}, #{quality1}, #{quality2}, #{quality3},
             #{ability1}, #{ability2}, #{ability3}, #{performance1}, #{performance2}, #{performance3},
-            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.name}, #{evaluatee.id}, #{evaluatee.name})
+            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.userName}, #{evaluatee.id}, #{evaluatee.userName})
     </insert>
 
     <!-- 删除 -->
@@ -31,6 +31,7 @@
         UPDATE cse_professional_score_form
         <set>
             <if test="complete != null">complete = #{complete},</if>
+            <if test="completeAt != null">complete_at = #{completeAt},</if>
             <if test="moral1 != null">moral_1 = #{moral1},</if>
             <if test="moral2 != null">moral_2 = #{moral2},</if>
             <if test="quality1 != null">quality_1 = #{quality1},</if>

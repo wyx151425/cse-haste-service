@@ -71,4 +71,10 @@ public class EvaluationPlanServiceImpl implements EvaluationPlanService {
     public List<EvaluationPlan> findEvaluationPlans() {
         return evaluationPlanRepository.findAll();
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public EvaluationPlan findEvaluationPlanById(Integer id) {
+        return evaluationPlanRepository.findOneById(id);
+    }
 }

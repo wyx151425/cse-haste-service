@@ -17,4 +17,12 @@ public interface EvaluatorRepository extends HasteRepository<Evaluator, Integer>
      * @return 评价者数据集合
      */
     List<Evaluator> findAllByEvaluationGroupId(Integer evaluationGroupId);
+
+    /**
+     * 根据用户ID查询评价者
+     *
+     * @param userId 用户ID
+     * @return 评价者数据集合
+     */
+    List<Evaluator> findAllByUserId(Integer userId);
 }

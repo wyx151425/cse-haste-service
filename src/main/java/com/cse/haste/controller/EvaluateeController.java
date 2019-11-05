@@ -55,4 +55,14 @@ public class EvaluateeController extends HasteFacade {
         List<Evaluatee> evaluatees = evaluateeService.findEvaluateesByEvaluationGroup(evaluationGroupId);
         return new Response<>(evaluatees);
     }
+
+    @GetMapping(value = "evaluationGroups/{evaluationGroupId}/notSelectEvaluatees")
+    public Response<List<User>> actionQueryNotSelectEvaluateesByEvaluationGroup(@PathVariable(value = "evaluationGroupId") Integer evaluationGroupId) {
+        User user = getCurrentUser();
+        if (!Constant.Roles.ADMIN.equals(user.getRole())) {
+            throw new HasteException(StatusCode.USER_UNAUTHORIZED);
+        }
+        List<User> users = evaluateeService.findNotSelectEvaluateesByEvaluationGroup(evaluationGroupId);
+        return new Response<>(users);
+    }
 }

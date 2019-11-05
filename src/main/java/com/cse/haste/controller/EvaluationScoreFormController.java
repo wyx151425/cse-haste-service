@@ -2,13 +2,13 @@ package com.cse.haste.controller;
 
 import com.cse.haste.model.dto.Response;
 import com.cse.haste.model.pojo.*;
+import com.cse.haste.service.EvaluationScoreFormService;
 import com.cse.haste.service.LeaderCadreScoreFormService;
 import com.cse.haste.service.LeadershipScoreFormService;
 import com.cse.haste.service.ProfessionalScoreFormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,12 +21,14 @@ public class EvaluationScoreFormController extends HasteFacade {
     private final LeadershipScoreFormService leadershipScoreFormService;
     private final LeaderCadreScoreFormService leaderCadreScoreFormService;
     private final ProfessionalScoreFormService professionalScoreFormService;
+    private final EvaluationScoreFormService evaluationScoreFormService;
 
     @Autowired
-    public EvaluationScoreFormController(LeadershipScoreFormService leadershipScoreFormService, LeaderCadreScoreFormService leaderCadreScoreFormService, ProfessionalScoreFormService professionalScoreFormService) {
+    public EvaluationScoreFormController(LeadershipScoreFormService leadershipScoreFormService, LeaderCadreScoreFormService leaderCadreScoreFormService, ProfessionalScoreFormService professionalScoreFormService, EvaluationScoreFormService evaluationScoreFormService) {
         this.leadershipScoreFormService = leadershipScoreFormService;
         this.leaderCadreScoreFormService = leaderCadreScoreFormService;
         this.professionalScoreFormService = professionalScoreFormService;
+        this.evaluationScoreFormService = evaluationScoreFormService;
     }
 
     @PutMapping(value = "leadershipScoreForms/submit")
@@ -83,15 +85,9 @@ public class EvaluationScoreFormController extends HasteFacade {
         return new Response<>(professionalScoreForms);
     }
 
-    @GetMapping(value = "evaluators/{evaluatorId}/evaluationScoreForms")
-    public Response<List<EvaluationScoreForm>> actionQueryEvaluationScoreFormsByEvaluator(@PathVariable(value = "evaluatorId") Integer evaluatorId) {
-        List<LeadershipScoreForm> leadershipScoreForms = leadershipScoreFormService.findLeadershipScoreFormsByEvaluator(evaluatorId);
-        List<LeaderCadreScoreForm> leaderCadreScoreForms = leaderCadreScoreFormService.findLeaderCadreScoreFormsByEvaluator(evaluatorId);
-        List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormService.findProfessionalScoreFormsByEvaluator(evaluatorId);
-        List<EvaluationScoreForm> evaluationScoreForms = new ArrayList<>();
-        evaluationScoreForms.addAll(leadershipScoreForms);
-        evaluationScoreForms.addAll(leaderCadreScoreForms);
-        evaluationScoreForms.addAll(professionalScoreForms);
+    @GetMapping(value = "users/{userId}/evaluationScoreForms")
+    public Response<List<EvaluationScoreForm>> actionQueryEvaluationScoreFormsByUser(@PathVariable(value = "userId") Integer userId) {
+        List<EvaluationScoreForm> evaluationScoreForms = evaluationScoreFormService.findEvaluationScoreFormsByUser(userId);
         return new Response<>(evaluationScoreForms);
     }
 }
