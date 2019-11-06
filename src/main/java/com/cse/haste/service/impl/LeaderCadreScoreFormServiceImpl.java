@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,12 +45,21 @@ public class LeaderCadreScoreFormServiceImpl implements LeaderCadreScoreFormServ
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void submitLeaderCadreScoreForm(LeaderCadreScoreForm leaderCadreScoreForm) {
+    public void updateLeaderCadreScoreForm(LeaderCadreScoreForm leaderCadreScoreForm) {
+        leaderCadreScoreForm.setComplete(false);
+        leaderCadreScoreFormRepository.update(leaderCadreScoreForm);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public LeaderCadreScoreForm submitLeaderCadreScoreForm(LeaderCadreScoreForm leaderCadreScoreForm) {
         LeaderCadreScoreForm target = leaderCadreScoreFormRepository.findOneById(leaderCadreScoreForm.getId());
         if (!target.getComplete()) {
             leaderCadreScoreForm.setComplete(true);
+            leaderCadreScoreForm.setCompleteAt(LocalDateTime.now().withNano(0));
             leaderCadreScoreFormRepository.update(leaderCadreScoreForm);
         }
+        return leaderCadreScoreFormRepository.findOneById(leaderCadreScoreForm.getId());
     }
 
     @Override

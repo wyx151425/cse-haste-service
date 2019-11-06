@@ -31,22 +31,40 @@ public class EvaluationScoreFormController extends HasteFacade {
         this.evaluationScoreFormService = evaluationScoreFormService;
     }
 
+    @PutMapping(value = "leadershipScoreForms")
+    public Response<LeadershipScoreForm> actionUpdateLeadershipScoreForm(@RequestBody LeadershipScoreForm leadershipScoreForm) {
+        leadershipScoreFormService.updateLeadershipScoreForm(leadershipScoreForm);
+        return new Response<>();
+    }
+
+    @PutMapping(value = "leaderCadreScoreForms")
+    public Response<LeaderCadreScoreForm> actionUpdateLeaderCadreScoreForm(@RequestBody LeaderCadreScoreForm leaderCadreScoreForm) {
+        leaderCadreScoreFormService.updateLeaderCadreScoreForm(leaderCadreScoreForm);
+        return new Response<>();
+    }
+
+    @PutMapping(value = "professionalScoreForms")
+    public Response<ProfessionalScoreForm> actionUpdateProfessionalScoreForm(@RequestBody ProfessionalScoreForm professionalScoreForm) {
+        professionalScoreFormService.updateProfessionalScoreForm(professionalScoreForm);
+        return new Response<>();
+    }
+
     @PutMapping(value = "leadershipScoreForms/submit")
     public Response<LeadershipScoreForm> actionSubmitLeadershipScoreForm(@RequestBody LeadershipScoreForm leadershipScoreForm) {
-        leadershipScoreFormService.submitLeadershipScoreForm(leadershipScoreForm);
-        return new Response<>();
+        LeadershipScoreForm newLeadershipScoreForm = leadershipScoreFormService.submitLeadershipScoreForm(leadershipScoreForm);
+        return new Response<>(newLeadershipScoreForm);
     }
 
     @PutMapping(value = "leaderCadreScoreForms/submit")
     public Response<LeaderCadreScoreForm> actionSubmitLeaderCadreScoreForm(@RequestBody LeaderCadreScoreForm leaderCadreScoreForm) {
-        leaderCadreScoreFormService.submitLeaderCadreScoreForm(leaderCadreScoreForm);
-        return new Response<>();
+        LeaderCadreScoreForm newLeaderCadreScoreForm = leaderCadreScoreFormService.submitLeaderCadreScoreForm(leaderCadreScoreForm);
+        return new Response<>(newLeaderCadreScoreForm);
     }
 
     @PutMapping(value = "professionalScoreForms/submit")
     public Response<ProfessionalScoreForm> actionSubmitProfessionalScoreForm(@RequestBody ProfessionalScoreForm professionalScoreForm) {
-        professionalScoreFormService.submitProfessionalScoreForm(professionalScoreForm);
-        return new Response<>();
+        ProfessionalScoreForm newProfessionalScoreForm = professionalScoreFormService.submitProfessionalScoreForm(professionalScoreForm);
+        return new Response<>(newProfessionalScoreForm);
     }
 
     @GetMapping(value = "leadershipScoreForms/{id}")

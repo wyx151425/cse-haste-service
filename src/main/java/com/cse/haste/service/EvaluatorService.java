@@ -32,6 +32,14 @@ public interface EvaluatorService {
     void deleteEvaluatorsByEvaluationGroup(Integer evaluationGroupId);
 
     /**
+     * 根据ID查询评价者
+     *
+     * @param id 评价者ID
+     * @return 评价者
+     */
+    Evaluator findEvaluatorById(Integer id);
+
+    /**
      * 根据考核评价工作组查询评价者
      *
      * @param evaluationGroupId 考核评价工作组ID

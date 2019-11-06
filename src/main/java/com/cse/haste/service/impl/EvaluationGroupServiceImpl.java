@@ -52,10 +52,12 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
             List<Evaluatee> evaluatees = evaluateeService.findEvaluateesByEvaluationGroup(evaluationGroup.getId());
             List<Evaluator> evaluators = evaluatorService.findEvaluatorsByEvaluationGroup(evaluationGroup.getId());
             if (Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN == evaluationPlan.getType()) {
+                Evaluatee leadership = evaluateeService.findEvaluateeById(1);
                 for (Evaluator evaluator : evaluators) {
                     LeadershipScoreForm leadershipScoreForm = LeadershipScoreForm.newInstance();
                     leadershipScoreForm.setType(Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN);
                     leadershipScoreForm.setEvaluationGroup(evaluationGroup);
+                    leadershipScoreForm.setEvaluatee(leadership);
                     leadershipScoreForm.setEvaluator(evaluator);
                     leadershipScoreFormService.saveLeadershipScoreForm(leadershipScoreForm);
                 }

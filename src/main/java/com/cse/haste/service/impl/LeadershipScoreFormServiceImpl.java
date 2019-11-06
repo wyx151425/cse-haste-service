@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,12 +45,21 @@ public class LeadershipScoreFormServiceImpl implements LeadershipScoreFormServic
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void submitLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm) {
+    public void updateLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm) {
+        leadershipScoreForm.setComplete(false);
+        leadershipScoreFormRepository.update(leadershipScoreForm);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public LeadershipScoreForm submitLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm) {
         LeadershipScoreForm target = leadershipScoreFormRepository.findOneById(leadershipScoreForm.getId());
         if (!target.getComplete()) {
             leadershipScoreForm.setComplete(true);
+            leadershipScoreForm.setCompleteAt(LocalDateTime.now().withNano(0));
             leadershipScoreFormRepository.update(leadershipScoreForm);
         }
+        return leadershipScoreFormRepository.findOneById(leadershipScoreForm.getId());
     }
 
     @Override

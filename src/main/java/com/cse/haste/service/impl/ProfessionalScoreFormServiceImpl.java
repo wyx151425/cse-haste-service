@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,12 +45,21 @@ public class ProfessionalScoreFormServiceImpl implements ProfessionalScoreFormSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void submitProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm) {
+    public void updateProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm) {
+        professionalScoreForm.setComplete(false);
+        professionalScoreFormRepository.update(professionalScoreForm);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ProfessionalScoreForm submitProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm) {
         ProfessionalScoreForm target = professionalScoreFormRepository.findOneById(professionalScoreForm.getId());
         if (!target.getComplete()) {
             professionalScoreForm.setComplete(true);
+            professionalScoreForm.setCompleteAt(LocalDateTime.now().withNano(0));
             professionalScoreFormRepository.update(professionalScoreForm);
         }
+        return professionalScoreFormRepository.findOneById(professionalScoreForm.getId());
     }
 
     @Override

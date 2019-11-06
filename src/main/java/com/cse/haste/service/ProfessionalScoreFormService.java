@@ -23,11 +23,19 @@ public interface ProfessionalScoreFormService {
     void deleteProfessionalScoreFormsByEvaluationGroup(Integer evaluationGroupId);
 
     /**
-     * 提交专业人才评价评分表
+     * 更新专业人才评价评分表
      *
      * @param professionalScoreForm 专业人才评价评分表
      */
-    void submitProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm);
+    void updateProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm);
+
+    /**
+     * 提交专业人才评价评分表
+     *
+     * @param professionalScoreForm 专业人才评价评分表
+     * @return 更新后的专业人才评价评分表
+     */
+    ProfessionalScoreForm submitProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm);
 
     /**
      * 根据考核评价工作组ID查询专业人才评价评分表

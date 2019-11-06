@@ -23,11 +23,19 @@ public interface LeadershipScoreFormService {
     void deleteLeadershipScoreFormsByEvaluationGroup(Integer evaluationGroupId);
 
     /**
-     * 提交领导班子评价评分表
+     * 领导班子评价评分表
      *
      * @param leadershipScoreForm 领导班子评价评分表
      */
-    void submitLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm);
+    void updateLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm);
+
+    /**
+     * 提交领导班子评价评分表
+     *
+     * @param leadershipScoreForm 领导班子评价评分表
+     * @return 更新后的领导班子评价评分表
+     */
+    LeadershipScoreForm submitLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm);
 
     /**
      * 根据考核评价工作组ID查询领导班子评价评分表

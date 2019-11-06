@@ -46,6 +46,12 @@ public class EvaluatorController extends HasteFacade {
         return new Response<>();
     }
 
+    @GetMapping(value = "evaluators/{id}")
+    public Response<Evaluator> actionQueryEvaluatorById(@PathVariable(value = "id") Integer id) {
+        Evaluator evaluator = evaluatorService.findEvaluatorById(id);
+        return new Response<>(evaluator);
+    }
+
     @GetMapping(value = "evaluationGroups/{evaluationGroupId}/evaluators")
     public Response<List<Evaluator>> actionQueryEvaluatorsByEvaluationGroup(@PathVariable(value = "evaluationGroupId") Integer evaluationGroupId) {
         User user = getCurrentUser();

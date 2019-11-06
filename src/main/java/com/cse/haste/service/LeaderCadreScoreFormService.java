@@ -23,11 +23,19 @@ public interface LeaderCadreScoreFormService {
     void deleteLeaderCadreScoreFormsByEvaluationGroup(Integer evaluationGroupId);
 
     /**
-     * 提交领导干部评价评分表
+     * 领导干部评价评分表
      *
      * @param leaderCadreScoreForm 领导干部评价评分表
      */
-    void submitLeaderCadreScoreForm(LeaderCadreScoreForm leaderCadreScoreForm);
+    void updateLeaderCadreScoreForm(LeaderCadreScoreForm leaderCadreScoreForm);
+
+    /**
+     * 提交领导干部评价评分表
+     *
+     * @param leaderCadreScoreForm 领导干部评价评分表
+     * @return 更新后的领导干部评价评分表
+     */
+    LeaderCadreScoreForm submitLeaderCadreScoreForm(LeaderCadreScoreForm leaderCadreScoreForm);
 
     /**
      * 根据考核评价工作组ID查询领导干部评价评分表
