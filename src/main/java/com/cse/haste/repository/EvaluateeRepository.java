@@ -1,6 +1,7 @@
 package com.cse.haste.repository;
 
 import com.cse.haste.model.pojo.Evaluatee;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -25,4 +26,14 @@ public interface EvaluateeRepository extends HasteRepository<Evaluatee, Integer>
      * @return 受评者数据集合
      */
     List<Evaluatee> findAllByEvaluationGroupId(Integer evaluationGroupId);
+
+    /**
+     * 根据考核评价计划ID查询未分配到工作组的受评者
+     *
+     * @param evaluationPlanId 考核评价计划ID
+     * @param ids              受评者ID
+     * @return 受评者
+     */
+    List<Evaluatee> findAllByEvaluationPlanIdAndUserIdNotIn(
+            @Param(value = "evaluationPlanId") Integer evaluationPlanId, @Param(value = "ids") List<Integer> ids);
 }

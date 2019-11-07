@@ -28,6 +28,14 @@ public interface UserRepository extends HasteRepository<User, Integer> {
     List<User> findAllByRole(String role);
 
     /**
+     * 查询ID在ID数组中的用户
+     *
+     * @param ids ID数组
+     * @return 用户数据集合
+     */
+    List<User> findAllByIdIn(@Param(value = "ids") List<Integer> ids);
+
+    /**
      * 查询ID不在ID数组中的用户
      *
      * @param ids ID数组

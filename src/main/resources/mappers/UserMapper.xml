@@ -39,6 +39,17 @@
         FROM cse_user WHERE status = 1 AND role = #{role}
     </select>
 
+    <!-- 查询ID在ID数组中的用户 -->
+    <select id="findAllByIdIn" resultType="user">
+        SELECT
+        <include refid="cse_user_column"/>
+        FROM cse_user WHERE status = 1 AND role = 'ROLE_USER' AND id IN
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 查询ID不在ID数组中的用户 -->
     <select id="findAllByIdNotIn" resultType="user">
         SELECT
         <include refid="cse_user_column"/>

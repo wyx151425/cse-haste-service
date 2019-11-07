@@ -30,17 +30,32 @@
 
     <!-- 根据ID查询受评者 -->
     <select id="findOneById" parameterType="int" resultMap="evaluateeMap">
-        SELECT <include refid="cse_evaluatee_column"/> FROM cse_evaluatee WHERE status = 1 AND id = #{id}
+        SELECT
+        <include refid="cse_evaluatee_column"/>
+        FROM cse_evaluatee WHERE status = 1 AND id = #{id}
     </select>
 
     <!-- 根据考核评价计划查询受评者 -->
     <select id="findAllByEvaluationPlanId" parameterType="int" resultMap="evaluateeMap">
-        SELECT <include refid="cse_evaluatee_column"/> FROM cse_evaluatee WHERE status = 1 AND evaluation_plan_id = #{evaluationPlanId}
+        SELECT
+        <include refid="cse_evaluatee_column"/>
+        FROM cse_evaluatee WHERE status = 1 AND evaluation_plan_id = #{evaluationPlanId}
     </select>
 
     <!-- 根据考核评价工作组查询受评者 -->
     <select id="findAllByEvaluationGroupId" parameterType="int" resultMap="evaluateeMap">
-        SELECT <include refid="cse_evaluatee_column"/> FROM cse_evaluatee WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        SELECT
+        <include refid="cse_evaluatee_column"/>
+        FROM cse_evaluatee WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
     </select>
 
+    <!-- 根据考核评价计划查询受评者 -->
+    <select id="findAllByEvaluationPlanIdAndUserIdNotIn" parameterType="int" resultMap="evaluateeMap">
+        SELECT
+        <include refid="cse_evaluatee_column"/>
+        FROM cse_evaluatee WHERE status = 1 AND evaluation_plan_id = #{evaluationPlanId} AND user_id NOT IN
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

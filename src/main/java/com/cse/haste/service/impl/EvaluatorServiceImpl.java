@@ -1,13 +1,16 @@
 package com.cse.haste.service.impl;
 
+import com.cse.haste.model.pojo.Evaluatee;
 import com.cse.haste.model.pojo.Evaluator;
 import com.cse.haste.model.pojo.User;
 import com.cse.haste.repository.EvaluatorRepository;
 import com.cse.haste.repository.UserRepository;
+import com.cse.haste.service.EvaluateeService;
 import com.cse.haste.service.EvaluatorService;
 import com.cse.haste.util.Constant;
 import com.cse.haste.util.GeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,11 +25,18 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 
     private final UserRepository userRepository;
     private final EvaluatorRepository evaluatorRepository;
+    private EvaluateeService evaluateeService;
 
     @Autowired
     public EvaluatorServiceImpl(UserRepository userRepository, EvaluatorRepository evaluatorRepository) {
         this.userRepository = userRepository;
         this.evaluatorRepository = evaluatorRepository;
+    }
+
+    @Autowired
+    @Lazy
+    public void setEvaluateeService(EvaluateeService evaluateeService) {
+        this.evaluateeService = evaluateeService;
     }
 
     @Override
