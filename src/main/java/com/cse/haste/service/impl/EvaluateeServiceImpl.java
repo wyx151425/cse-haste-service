@@ -61,6 +61,12 @@ public class EvaluateeServiceImpl implements EvaluateeService {
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<Evaluatee> findEvaluateesByEvaluationPlan(Integer evaluationPlanId) {
+        return evaluateeRepository.findAllByEvaluationPlanId(evaluationPlanId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<Evaluatee> findEvaluateesByEvaluationGroup(Integer evaluationGroupId) {
         return evaluateeRepository.findAllByEvaluationGroupId(evaluationGroupId);
     }

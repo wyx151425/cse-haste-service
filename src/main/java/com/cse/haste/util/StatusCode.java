@@ -10,6 +10,7 @@ public class StatusCode {
     public static final int STATUS_ERROR = 300;
     public static final int SYSTEM_ERROR = 500;
     public static final int PARAM_ERROR = 600;
+    public static final int OPERATION_FAILED = 700;
     public static final int REQUEST_ILLEGAL = 9999;
     public static final int USER_UNREGISTER = 1000;
     public static final int USER_REGISTERED = 1001;

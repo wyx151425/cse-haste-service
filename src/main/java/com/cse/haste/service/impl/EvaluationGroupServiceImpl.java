@@ -52,7 +52,7 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
             List<Evaluatee> evaluatees = evaluateeService.findEvaluateesByEvaluationGroup(evaluationGroup.getId());
             List<Evaluator> evaluators = evaluatorService.findEvaluatorsByEvaluationGroup(evaluationGroup.getId());
             if (Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN == evaluationPlan.getType()) {
-                Evaluatee leadership = evaluateeService.findEvaluateeById(1);
+                Evaluatee leadership = evaluateeService.findEvaluateesByEvaluationPlan(evaluationPlan.getId()).get(0);
                 for (Evaluator evaluator : evaluators) {
                     LeadershipScoreForm leadershipScoreForm = LeadershipScoreForm.newInstance();
                     leadershipScoreForm.setType(Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN);
@@ -107,6 +107,15 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public EvaluationGroup submitEvaluationGroup(Integer id) {
+        EvaluationGroup evaluationGroup = evaluationGroupRepository.findOneById(id);
+        evaluationGroup.setComplete(true);
+        evaluationGroupRepository.update(evaluationGroup);
+        return evaluationGroupRepository.findOneById(id);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public EvaluationGroup findEvaluationGroupById(Integer id) {
         return evaluationGroupRepository.findOneById(id);
@@ -116,5 +125,11 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<EvaluationGroup> findEvaluationGroupsByEvaluationPlan(Integer evaluationPlanId) {
         return evaluationGroupRepository.findAllByEvaluationPlanId(evaluationPlanId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<EvaluationGroup> findIncompleteEvaluationGroupsByEvaluationPlan(Integer evaluationPlanId) {
+        return evaluationGroupRepository.findAllByEvaluationPlanIdAndComplete(evaluationPlanId, false);
     }
 }

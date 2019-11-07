@@ -2,10 +2,12 @@ package com.cse.haste.service.impl;
 
 import com.cse.haste.model.pojo.LeadershipScoreForm;
 import com.cse.haste.repository.LeadershipScoreFormRepository;
+import com.cse.haste.service.EvaluationGroupService;
 import com.cse.haste.service.LeadershipScoreFormService;
 import com.cse.haste.util.Constant;
 import com.cse.haste.util.GeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +22,17 @@ public class LeadershipScoreFormServiceImpl implements LeadershipScoreFormServic
 
     private final LeadershipScoreFormRepository leadershipScoreFormRepository;
 
+    private EvaluationGroupService evaluationGroupService;
+
     @Autowired
     public LeadershipScoreFormServiceImpl(LeadershipScoreFormRepository leadershipScoreFormRepository) {
         this.leadershipScoreFormRepository = leadershipScoreFormRepository;
+    }
+
+    @Autowired
+    @Lazy
+    public void setEvaluationGroupService(EvaluationGroupService evaluationGroupService) {
+        this.evaluationGroupService = evaluationGroupService;
     }
 
     @Override
@@ -58,6 +68,10 @@ public class LeadershipScoreFormServiceImpl implements LeadershipScoreFormServic
             leadershipScoreForm.setComplete(true);
             leadershipScoreForm.setCompleteAt(LocalDateTime.now().withNano(0));
             leadershipScoreFormRepository.update(leadershipScoreForm);
+        }
+        List<LeadershipScoreForm> leadershipScoreForms = leadershipScoreFormRepository.findAllByEvaluationGroupIdAndComplete(leadershipScoreForm.getEvaluationGroupId(), false);
+        if (leadershipScoreForms.size() == 0) {
+            evaluationGroupService.submitEvaluationGroup(leadershipScoreForm.getEvaluationGroupId());
         }
         return leadershipScoreFormRepository.findOneById(leadershipScoreForm.getId());
     }

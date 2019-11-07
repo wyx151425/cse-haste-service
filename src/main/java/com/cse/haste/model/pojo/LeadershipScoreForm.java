@@ -12,61 +12,57 @@ import java.time.LocalDateTime;
  */
 public class LeadershipScoreForm extends EvaluationScoreForm {
     /**
-     * 政治忠诚
+     * 政治方向
      */
-    private Integer politicsPerformance1;
+    private Integer politicsQuality1;
     /**
-     * 政治定力
+     * 党建工作
      */
-    private Integer politicsPerformance2;
+    private Integer politicsQuality2;
     /**
-     * 政治担当
+     * 社会责任
      */
-    private Integer politicsPerformance3;
+    private Integer politicsQuality3;
     /**
-     * 政治能力
+     * 经济效益
      */
-    private Integer politicsPerformance4;
+    private Integer operatePerformance1;
     /**
-     * 政治自律
+     * 可持续发展
      */
-    private Integer politicsPerformance5;
+    private Integer operatePerformance2;
     /**
-     * 推动执行能力
+     * 创新成效
      */
-    private Integer abilityAndQuality1;
+    private Integer operatePerformance3;
     /**
-     * 学习创新能力
+     * 科学管理
      */
-    private Integer abilityAndQuality2;
+    private Integer operatePerformance4;
     /**
-     * 团队建设能力
+     * 发扬民主
      */
-    private Integer abilityAndQuality3;
+    private Integer teamwork1;
     /**
-     * 职业操守
+     * 整体合力
      */
-    private Integer abilityAndQuality4;
+    private Integer teamwork2;
     /**
-     * 履职绩效
+     * 运行机制
      */
-    private Integer workPerformance1;
+    private Integer teamwork3;
     /**
-     * 协同成效
+     * 联系群众
      */
-    private Integer workPerformance2;
+    private Integer styleAndImage1;
     /**
-     * 作风建设
+     * 选人用人
      */
-    private Integer integrity1;
+    private Integer styleAndImage2;
     /**
      * 廉洁自律
      */
-    private Integer integrity2;
-    /**
-     * 一岗双责
-     */
-    private Integer integrity3;
+    private Integer styleAndImage3;
 
     public LeadershipScoreForm() {
     }
@@ -82,115 +78,107 @@ public class LeadershipScoreForm extends EvaluationScoreForm {
         return leadershipScoreForm;
     }
 
-    public Integer getPoliticsPerformance1() {
-        return politicsPerformance1;
+    public Integer getPoliticsQuality1() {
+        return politicsQuality1;
     }
 
-    public void setPoliticsPerformance1(Integer politicsPerformance1) {
-        this.politicsPerformance1 = politicsPerformance1;
+    public void setPoliticsQuality1(Integer politicsQuality1) {
+        this.politicsQuality1 = politicsQuality1;
     }
 
-    public Integer getPoliticsPerformance2() {
-        return politicsPerformance2;
+    public Integer getPoliticsQuality2() {
+        return politicsQuality2;
     }
 
-    public void setPoliticsPerformance2(Integer politicsPerformance2) {
-        this.politicsPerformance2 = politicsPerformance2;
+    public void setPoliticsQuality2(Integer politicsQuality2) {
+        this.politicsQuality2 = politicsQuality2;
     }
 
-    public Integer getPoliticsPerformance3() {
-        return politicsPerformance3;
+    public Integer getPoliticsQuality3() {
+        return politicsQuality3;
     }
 
-    public void setPoliticsPerformance3(Integer politicsPerformance3) {
-        this.politicsPerformance3 = politicsPerformance3;
+    public void setPoliticsQuality3(Integer politicsQuality3) {
+        this.politicsQuality3 = politicsQuality3;
     }
 
-    public Integer getPoliticsPerformance4() {
-        return politicsPerformance4;
+    public Integer getOperatePerformance1() {
+        return operatePerformance1;
     }
 
-    public void setPoliticsPerformance4(Integer politicsPerformance4) {
-        this.politicsPerformance4 = politicsPerformance4;
+    public void setOperatePerformance1(Integer operatePerformance1) {
+        this.operatePerformance1 = operatePerformance1;
     }
 
-    public Integer getPoliticsPerformance5() {
-        return politicsPerformance5;
+    public Integer getOperatePerformance2() {
+        return operatePerformance2;
     }
 
-    public void setPoliticsPerformance5(Integer politicsPerformance5) {
-        this.politicsPerformance5 = politicsPerformance5;
+    public void setOperatePerformance2(Integer operatePerformance2) {
+        this.operatePerformance2 = operatePerformance2;
     }
 
-    public Integer getAbilityAndQuality1() {
-        return abilityAndQuality1;
+    public Integer getOperatePerformance3() {
+        return operatePerformance3;
     }
 
-    public void setAbilityAndQuality1(Integer abilityAndQuality1) {
-        this.abilityAndQuality1 = abilityAndQuality1;
+    public void setOperatePerformance3(Integer operatePerformance3) {
+        this.operatePerformance3 = operatePerformance3;
     }
 
-    public Integer getAbilityAndQuality2() {
-        return abilityAndQuality2;
+    public Integer getOperatePerformance4() {
+        return operatePerformance4;
     }
 
-    public void setAbilityAndQuality2(Integer abilityAndQuality2) {
-        this.abilityAndQuality2 = abilityAndQuality2;
+    public void setOperatePerformance4(Integer operatePerformance4) {
+        this.operatePerformance4 = operatePerformance4;
     }
 
-    public Integer getAbilityAndQuality3() {
-        return abilityAndQuality3;
+    public Integer getTeamwork1() {
+        return teamwork1;
     }
 
-    public void setAbilityAndQuality3(Integer abilityAndQuality3) {
-        this.abilityAndQuality3 = abilityAndQuality3;
+    public void setTeamwork1(Integer teamwork1) {
+        this.teamwork1 = teamwork1;
     }
 
-    public Integer getAbilityAndQuality4() {
-        return abilityAndQuality4;
+    public Integer getTeamwork2() {
+        return teamwork2;
     }
 
-    public void setAbilityAndQuality4(Integer abilityAndQuality4) {
-        this.abilityAndQuality4 = abilityAndQuality4;
+    public void setTeamwork2(Integer teamwork2) {
+        this.teamwork2 = teamwork2;
     }
 
-    public Integer getWorkPerformance1() {
-        return workPerformance1;
+    public Integer getTeamwork3() {
+        return teamwork3;
     }
 
-    public void setWorkPerformance1(Integer workPerformance1) {
-        this.workPerformance1 = workPerformance1;
+    public void setTeamwork3(Integer teamwork3) {
+        this.teamwork3 = teamwork3;
     }
 
-    public Integer getWorkPerformance2() {
-        return workPerformance2;
+    public Integer getStyleAndImage1() {
+        return styleAndImage1;
     }
 
-    public void setWorkPerformance2(Integer workPerformance2) {
-        this.workPerformance2 = workPerformance2;
+    public void setStyleAndImage1(Integer styleAndImage1) {
+        this.styleAndImage1 = styleAndImage1;
     }
 
-    public Integer getIntegrity1() {
-        return integrity1;
+    public Integer getStyleAndImage2() {
+        return styleAndImage2;
     }
 
-    public void setIntegrity1(Integer integrity1) {
-        this.integrity1 = integrity1;
+    public void setStyleAndImage2(Integer styleAndImage2) {
+        this.styleAndImage2 = styleAndImage2;
     }
 
-    public Integer getIntegrity2() {
-        return integrity2;
+    public Integer getStyleAndImage3() {
+        return styleAndImage3;
     }
 
-    public void setIntegrity2(Integer integrity2) {
-        this.integrity2 = integrity2;
-    }
-
-    public Integer getIntegrity3() {
-        return integrity3;
-    }
-
-    public void setIntegrity3(Integer integrity3) {
-        this.integrity3 = integrity3;
+    public void setStyleAndImage3(Integer styleAndImage3) {
+        this.styleAndImage3 = styleAndImage3;
     }
 }

@@ -28,6 +28,16 @@ public interface ProfessionalScoreFormRepository extends HasteRepository<Profess
     List<ProfessionalScoreForm> findAllByEvaluatorId(Integer evaluatorId);
 
     /**
+     * 根据考核评价工作组ID和评分完成情况查询专业人才评价评分表
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param complete          评分完成情况
+     * @return 专业人才评价评分表数据集合
+     */
+    List<ProfessionalScoreForm> findAllByEvaluationGroupIdAndComplete(
+            @Param(value = "evaluationGroupId") Integer evaluationGroupId, @Param(value = "complete") Boolean complete);
+
+    /**
      * 根据考核评价工作组ID和评价者ID查询专业人才评价评分表
      *
      * @param evaluationGroupId 考核评价工作组ID

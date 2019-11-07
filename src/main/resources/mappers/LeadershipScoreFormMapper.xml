@@ -4,22 +4,23 @@
 <mapper namespace="com.cse.haste.repository.LeadershipScoreFormRepository">
 
     <sql id="cse_leadership_score_form_column">
-        id, status, type, complete, complete_at, politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
-        ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4, work_performance_1, work_performance_2,
-        integrity_1, integrity_2, integrity_3, evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
+        id, status, type, complete, complete_at, politics_quality_1, politics_quality_2, politics_quality_3,
+        operate_performance_1, operate_performance_2, operate_performance_3, operate_performance_4,
+        teamwork_1, teamwork_2, teamwork_3, style_and_image_1, style_and_image_2, style_and_image_3,
+        evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
     </sql>
 
     <!-- 保存 -->
     <insert id="save" parameterType="leadershipScoreForm" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cse_leadership_score_form(object_id, status, create_at, update_at, type, complete, complete_at,
-            politics_performance_1, politics_performance_2, politics_performance_3, politics_performance_4, politics_performance_5,
-            ability_and_quality_1, ability_and_quality_2, ability_and_quality_3, ability_and_quality_4,
-            work_performance_1, work_performance_2, integrity_1, integrity_2, integrity_3,
+            politics_quality_1, politics_quality_2, politics_quality_3,
+            operate_performance_1, operate_performance_2, operate_performance_3, operate_performance_4,
+            teamwork_1, teamwork_2, teamwork_3, style_and_image_1, style_and_image_2, style_and_image_3,
             evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name)
         VALUES(#{objectId}, #{status}, NOW(), NOW(), #{type}, #{complete}, #{completeAt},
-            #{politicsPerformance1}, #{politicsPerformance2}, #{politicsPerformance3}, #{politicsPerformance4}, #{politicsPerformance5},
-            #{abilityAndQuality1}, #{abilityAndQuality2}, #{abilityAndQuality3}, #{abilityAndQuality4},
-            #{workPerformance1}, #{workPerformance2}, #{integrity1}, #{integrity2}, #{integrity3},
+            #{politicsQuality1}, #{politicsQuality2}, #{politicsQuality3}, #{operatePerformance1}, #{operatePerformance2},
+            #{operatePerformance3}, #{operatePerformance4}, #{teamwork1}, #{teamwork2},
+            #{teamwork3}, #{styleAndImage1}, #{styleAndImage2}, #{styleAndImage3},
             #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.userName}, #{evaluatee.id}, #{evaluatee.userName})
     </insert>
 
@@ -34,20 +35,19 @@
         <set>
             <if test="complete != null">complete = #{complete},</if>
             <if test="completeAt != null">complete_at = #{completeAt},</if>
-            <if test="politicsPerformance1 != null">politics_performance_1 = #{politicsPerformance1},</if>
-            <if test="politicsPerformance2 != null">politics_performance_2 = #{politicsPerformance2},</if>
-            <if test="politicsPerformance3 != null">politics_performance_3 = #{politicsPerformance3},</if>
-            <if test="politicsPerformance4 != null">politics_performance_4 = #{politicsPerformance4},</if>
-            <if test="politicsPerformance5 != null">politics_performance_5 = #{politicsPerformance5},</if>
-            <if test="abilityAndQuality1 != null">ability_and_quality_1 = #{abilityAndQuality1},</if>
-            <if test="abilityAndQuality2 != null">ability_and_quality_2 = #{abilityAndQuality2},</if>
-            <if test="abilityAndQuality3 != null">ability_and_quality_3 = #{abilityAndQuality3},</if>
-            <if test="abilityAndQuality4 != null">ability_and_quality_4 = #{abilityAndQuality4},</if>
-            <if test="workPerformance1 != null">work_performance_1 = #{workPerformance1},</if>
-            <if test="workPerformance2 != null">work_performance_2 = #{workPerformance2},</if>
-            <if test="integrity1 != null">integrity_1 = #{integrity1},</if>
-            <if test="integrity2 != null">integrity_2 = #{integrity2},</if>
-            <if test="integrity3 != null">integrity_3 = #{integrity3},</if>
+            <if test="politicsQuality1 != null">politics_quality_1 = #{politicsQuality1},</if>
+            <if test="politicsQuality2 != null">politics_quality_2 = #{politicsQuality2},</if>
+            <if test="politicsQuality3 != null">politics_quality_3 = #{politicsQuality3},</if>
+            <if test="operatePerformance1 != null">operate_performance_1 = #{operatePerformance1},</if>
+            <if test="operatePerformance2 != null">operate_performance_2 = #{operatePerformance2},</if>
+            <if test="operatePerformance3 != null">operate_performance_3 = #{operatePerformance3},</if>
+            <if test="operatePerformance4 != null">operate_performance_4 = #{operatePerformance4},</if>
+            <if test="teamwork1 != null">teamwork_1 = #{teamwork1},</if>
+            <if test="teamwork2 != null">teamwork_2 = #{teamwork2},</if>
+            <if test="teamwork3 != null">teamwork_3 = #{teamwork3},</if>
+            <if test="styleAndImage1 != null">style_and_image_1 = #{styleAndImage1},</if>
+            <if test="styleAndImage2 != null">style_and_image_2 = #{styleAndImage2},</if>
+            <if test="styleAndImage3 != null">style_and_image_3 = #{styleAndImage3},</if>
             update_at = NOW()
         </set>
         WHERE id = #{id}
@@ -69,6 +69,13 @@
         SELECT
         <include refid="cse_leadership_score_form_column"/>
         FROM cse_leadership_score_form WHERE status = 1 AND evaluator_id = #{evaluatorId}
+    </select>
+
+    <select id="findAllByEvaluationGroupIdAndComplete" resultType="leadershipScoreForm">
+        SELECT
+        <include refid="cse_leadership_score_form_column"/>
+        FROM cse_leadership_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND complete = #{complete}
     </select>
 
     <select id="findAllByEvaluationGroupIdAndEvaluatorId" resultType="leadershipScoreForm">

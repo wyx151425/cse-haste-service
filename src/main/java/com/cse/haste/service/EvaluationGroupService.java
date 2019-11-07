@@ -39,6 +39,14 @@ public interface EvaluationGroupService {
     void deleteEvaluationGroupsByEvaluationPlan(Integer evaluationPlanId);
 
     /**
+     * 提交考核评价工作组
+     *
+     * @param id 考核评价工作组ID
+     * @return 考核评价工作组
+     */
+    EvaluationGroup submitEvaluationGroup(Integer id);
+
+    /**
      * 根据ID查询考核评价工作组
      *
      * @param id 考核评价工作组ID
@@ -49,8 +57,16 @@ public interface EvaluationGroupService {
     /**
      * 根据考核评价计划查询考核评价工作组
      *
-     * @param planId 考核评价计划ID
+     * @param evaluationPlanId 考核评价计划ID
      * @return 考核评价工作组
      */
-    List<EvaluationGroup> findEvaluationGroupsByEvaluationPlan(Integer planId);
+    List<EvaluationGroup> findEvaluationGroupsByEvaluationPlan(Integer evaluationPlanId);
+
+    /**
+     * 根据考核评价计划查询未完成的考核评价工作组
+     *
+     * @param evaluationPlanId 考核评价计划ID
+     * @return 考核评价工作组
+     */
+    List<EvaluationGroup> findIncompleteEvaluationGroupsByEvaluationPlan(Integer evaluationPlanId);
 }

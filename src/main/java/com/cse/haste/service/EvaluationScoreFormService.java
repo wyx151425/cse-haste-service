@@ -11,6 +11,14 @@ import java.util.List;
  */
 public interface EvaluationScoreFormService {
     /**
+     * 根据考核评价工作组ID查询考核评价评分表
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @return 查询到的考核评价评分表
+     */
+    List<EvaluationScoreForm> findEvaluationScoreFormsByEvaluationGroup(Integer evaluationGroupId);
+
+    /**
      * 根据用户ID查询考核评价评分表
      *
      * @param userId 用户ID

@@ -103,6 +103,12 @@ public class EvaluationScoreFormController extends HasteFacade {
         return new Response<>(professionalScoreForms);
     }
 
+    @GetMapping(value = "evaluationGroups/{evaluationGroupId}/evaluationScoreForms")
+    public Response<List<EvaluationScoreForm>> actionQueryEvaluationScoreFormByEvaluator(@PathVariable(value = "evaluationGroupId") Integer evaluationGroupId) {
+        List<EvaluationScoreForm> evaluationScoreForms = evaluationScoreFormService.findEvaluationScoreFormsByEvaluationGroup(evaluationGroupId);
+        return new Response<>(evaluationScoreForms);
+    }
+
     @GetMapping(value = "users/{userId}/evaluationScoreForms")
     public Response<List<EvaluationScoreForm>> actionQueryEvaluationScoreFormsByUser(@PathVariable(value = "userId") Integer userId) {
         List<EvaluationScoreForm> evaluationScoreForms = evaluationScoreFormService.findEvaluationScoreFormsByUser(userId);

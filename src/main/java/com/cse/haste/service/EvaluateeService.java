@@ -40,6 +40,14 @@ public interface EvaluateeService {
     Evaluatee findEvaluateeById(Integer id);
 
     /**
+     * 根据考核评价计划查询受评者
+     *
+     * @param evaluationPlanId 考核评价计划ID
+     * @return 受评者数据集合
+     */
+    List<Evaluatee> findEvaluateesByEvaluationPlan(Integer evaluationPlanId);
+
+    /**
      * 根据考核评价工作组查询受评者
      *
      * @param evaluationGroupId 考核评价工作组ID

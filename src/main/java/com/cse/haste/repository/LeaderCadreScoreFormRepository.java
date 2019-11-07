@@ -28,6 +28,16 @@ public interface LeaderCadreScoreFormRepository extends HasteRepository<LeaderCa
     List<LeaderCadreScoreForm> findAllByEvaluatorId(Integer evaluatorId);
 
     /**
+     * 根据考核评价工作组ID和评分完成情况查询领导干部评价评分表
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param complete          评分完成情况
+     * @return 领导干部评价评分表数据集合
+     */
+    List<LeaderCadreScoreForm> findAllByEvaluationGroupIdAndComplete(
+            @Param(value = "evaluationGroupId") Integer evaluationGroupId, @Param(value = "complete") Boolean complete);
+
+    /**
      * 根据考核评价工作组ID和评价者ID查询领导干部评价评分表
      *
      * @param evaluationGroupId 考核评价工作组ID

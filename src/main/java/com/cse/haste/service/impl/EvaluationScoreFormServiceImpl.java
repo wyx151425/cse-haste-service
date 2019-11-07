@@ -31,6 +31,19 @@ public class EvaluationScoreFormServiceImpl implements EvaluationScoreFormServic
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<EvaluationScoreForm> findEvaluationScoreFormsByEvaluationGroup(Integer evaluationGroupId) {
+        List<EvaluationScoreForm> evaluationScoreForms = new ArrayList<>();
+        List<LeadershipScoreForm> leadershipScoreForms = leadershipScoreFormService.findLeadershipScoreFormsByEvaluationGroup(evaluationGroupId);
+        List<LeaderCadreScoreForm> leaderCadreScoreForms = leaderCadreScoreFormService.findLeaderCadreScoreFormsByEvaluationGroup(evaluationGroupId);
+        List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormService.findProfessionalScoreFormsByEvaluationGroup(evaluationGroupId);
+        evaluationScoreForms.addAll(leadershipScoreForms);
+        evaluationScoreForms.addAll(leaderCadreScoreForms);
+        evaluationScoreForms.addAll(professionalScoreForms);
+        return evaluationScoreForms;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
     public List<EvaluationScoreForm> findEvaluationScoreFormsByUser(Integer userId) {
         List<Evaluator> evaluators = evaluatorService.findEvaluatorsByUser(userId);
         List<EvaluationScoreForm> evaluationScoreForms = new ArrayList<>();

@@ -71,6 +71,13 @@
         FROM cse_leader_cadre_score_form WHERE status = 1 AND evaluator_id = #{evaluatorId}
     </select>
 
+    <select id="findAllByEvaluationGroupIdAndComplete" resultType="leaderCadreScoreForm">
+        SELECT
+        <include refid="cse_leader_cadre_score_form_column"/>
+        FROM cse_leader_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND complete = #{complete}
+    </select>
+
     <select id="findAllByEvaluationGroupIdAndEvaluatorId" resultType="leaderCadreScoreForm">
         SELECT
         <include refid="cse_leader_cadre_score_form_column"/>

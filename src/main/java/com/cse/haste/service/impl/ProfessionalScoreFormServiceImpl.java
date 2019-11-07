@@ -2,10 +2,12 @@ package com.cse.haste.service.impl;
 
 import com.cse.haste.model.pojo.ProfessionalScoreForm;
 import com.cse.haste.repository.ProfessionalScoreFormRepository;
+import com.cse.haste.service.EvaluationGroupService;
 import com.cse.haste.service.ProfessionalScoreFormService;
 import com.cse.haste.util.Constant;
 import com.cse.haste.util.GeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +21,17 @@ import java.util.List;
 public class ProfessionalScoreFormServiceImpl implements ProfessionalScoreFormService {
 
     private final ProfessionalScoreFormRepository professionalScoreFormRepository;
+    private EvaluationGroupService evaluationGroupService;
 
     @Autowired
     public ProfessionalScoreFormServiceImpl(ProfessionalScoreFormRepository professionalScoreFormRepository) {
         this.professionalScoreFormRepository = professionalScoreFormRepository;
+    }
+
+    @Autowired
+    @Lazy
+    public void setEvaluationGroupService(EvaluationGroupService evaluationGroupService) {
+        this.evaluationGroupService = evaluationGroupService;
     }
 
     @Override
@@ -58,6 +67,10 @@ public class ProfessionalScoreFormServiceImpl implements ProfessionalScoreFormSe
             professionalScoreForm.setComplete(true);
             professionalScoreForm.setCompleteAt(LocalDateTime.now().withNano(0));
             professionalScoreFormRepository.update(professionalScoreForm);
+        }
+        List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormRepository.findAllByEvaluationGroupIdAndComplete(professionalScoreForm.getEvaluationGroupId(), false);
+        if (professionalScoreForms.size() == 0) {
+            evaluationGroupService.submitEvaluationGroup(professionalScoreForm.getEvaluationGroupId());
         }
         return professionalScoreFormRepository.findOneById(professionalScoreForm.getId());
     }

@@ -13,14 +13,14 @@
             <id column="id" property="id"/>
         </association>
         <!--<collection column="id" property="candidateList" fetchType="lazy"-->
-                    <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.Candidate"-->
-                    <!--select="com.cse.haste.repository.CandidateRepository.findAllByGroup">-->
-            <!--<id property="id" column="id"/>-->
+        <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.Candidate"-->
+        <!--select="com.cse.haste.repository.CandidateRepository.findAllByGroup">-->
+        <!--<id property="id" column="id"/>-->
         <!--</collection>-->
         <!--<collection column="id" property="judgeList" fetchType="lazy"-->
-                    <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.User"-->
-                    <!--select="com.cse.haste.repository.UserRepository.findJudgesByGroup">-->
-            <!--<id property="id" column="id"/>-->
+        <!--javaType="ArrayList" ofType="com.cse.haste.model.pojo.User"-->
+        <!--select="com.cse.haste.repository.UserRepository.findJudgesByGroup">-->
+        <!--<id property="id" column="id"/>-->
         <!--</collection>-->
     </resultMap>
 
@@ -62,6 +62,14 @@
         SELECT
         <include refid="cse_evaluation_group_column"/>
         FROM cse_evaluation_group WHERE status = 1 AND evaluation_plan_id = #{evaluationPlanId}
+    </select>
+
+    <!-- 根据考核评价计划ID和完成情况查询所有的考核评价工作组 -->
+    <select id="findAllByEvaluationPlanIdAndComplete" resultType="evaluationGroup">
+        SELECT
+        <include refid="cse_evaluation_group_column"/>
+        FROM cse_evaluation_group WHERE status = 1 AND evaluation_plan_id = #{evaluationPlanId}
+        AND complete = #{complete}
     </select>
 
 </mapper>

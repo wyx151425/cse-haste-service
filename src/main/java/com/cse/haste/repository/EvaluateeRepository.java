@@ -11,6 +11,14 @@ import java.util.List;
 @Repository(value = "evaluateeRepository")
 public interface EvaluateeRepository extends HasteRepository<Evaluatee, Integer> {
     /**
+     * 根据考核评价计划ID查询受评者
+     *
+     * @param evaluationPlanId 考核评价工作组ID
+     * @return 受评者数据集合
+     */
+    List<Evaluatee> findAllByEvaluationPlanId(Integer evaluationPlanId);
+
+    /**
      * 根据考核评价工作组ID查询受评者
      *
      * @param evaluationGroupId 考核评价工作组ID
