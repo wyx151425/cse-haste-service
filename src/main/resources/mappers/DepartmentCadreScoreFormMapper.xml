@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cse.haste.repository.DepartmentCadreScoreFormRepository">
+
+    <sql id="cse_department_cadre_score_form_column">
+        id, status, type, complete, complete_at, politics_performance, ability_and_quality, work_performance, integrity,
+        evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name
+    </sql>
+
+    <!-- 保存 -->
+    <insert id="save" parameterType="departmentCadreScoreForm" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cse_department_cadre_score_form(object_id, status, create_at, update_at, type, complete, complete_at,
+            politics_performance, ability_and_quality, work_performance, integrity,
+            evaluation_group_id, evaluation_group_name, evaluator_id, evaluator_name, evaluatee_id, evaluatee_name)
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{type}, #{complete}, #{completeAt},
+            #{politicsPerformance}, #{abilityAndQuality}, #{workPerformance}, #{integrity},
+            #{evaluationGroup.id}, #{evaluationGroup.name}, #{evaluator.id}, #{evaluator.userName}, #{evaluatee.id}, #{evaluatee.userName})
+    </insert>
+
+    <!-- 删除 -->
+    <update id="delete" parameterType="int">
+        UPDATE cse_department_cadre_score_form SET status = 0, update_at = NOW() WHERE id = #{id}
+    </update>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="departmentCadreScoreForm">
+        UPDATE cse_department_cadre_score_form
+        <set>
+            <if test="complete != null">complete = #{complete},</if>
+            <if test="completeAt != null">complete_at = #{completeAt},</if>
+            <if test="politicsPerformance != null">politics_performance = #{politicsPerformance},</if>
+            <if test="abilityAndQuality != null">ability_and_quality = #{abilityAndQuality},</if>
+            <if test="workPerformance != null">work_performance = #{workPerformance},</if>
+            <if test="integrity != null">integrity = #{integrity},</if>
+            update_at = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findOneById" parameterType="int" resultType="departmentCadreScoreForm">
+        SELECT
+        <include refid="cse_department_cadre_score_form_column"/>
+        FROM cse_department_cadre_score_form WHERE status = 1 AND id = #{id}
+    </select>
+
+    <select id="findAllByEvaluationGroupId" parameterType="int" resultType="departmentCadreScoreForm">
+        SELECT
+        <include refid="cse_department_cadre_score_form_column"/>
+        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+    </select>
+
+    <select id="findAllByEvaluatorId" parameterType="int" resultType="departmentCadreScoreForm">
+        SELECT
+        <include refid="cse_department_cadre_score_form_column"/>
+        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluator_id = #{evaluatorId}
+    </select>
+
+    <select id="findAllByEvaluationGroupIdAndComplete" resultType="departmentCadreScoreForm">
+        SELECT
+        <include refid="cse_department_cadre_score_form_column"/>
+        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND complete = #{complete}
+    </select>
+
+    <select id="findAllByEvaluationGroupIdAndEvaluatorId" resultType="departmentCadreScoreForm">
+        SELECT
+        <include refid="cse_department_cadre_score_form_column"/>
+        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND evaluator_id = #{evaluatorId}
+    </select>
+
+</mapper>

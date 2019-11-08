@@ -75,6 +75,7 @@ public class LeadershipScoreForm extends EvaluationScoreForm {
         leadershipScoreForm.setCreateAt(dateTime);
         leadershipScoreForm.setUpdateAt(dateTime);
         leadershipScoreForm.setComplete(false);
+        leadershipScoreForm.setType(Constant.EvaluationScoreForm.Types.LEADERSHIP_EVALUATION_SCORE_FORM);
         return leadershipScoreForm;
     }
 

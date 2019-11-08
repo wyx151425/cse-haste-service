@@ -33,13 +33,23 @@ public class Constant {
         public static class Types {
             public static final int LEADERSHIP_EVALUATION_PLAN = 100;
             public static final int LEADER_CADRE_EVALUATION_PLAN = 200;
-            public static final int PROFESSIONAL_EVALUATION_PLAN = 300;
+            public static final int DEPARTMENT_CADRE_EVALUATION_PLAN = 300;
+            public static final int PROFESSIONAL_EVALUATION_PLAN = 400;
         }
 
         public static class Stages {
             public static final int INITIALIZE = 100;
             public static final int STARTED = 200;
             public static final int COMPLETED = 300;
+        }
+    }
+
+    public static class EvaluationScoreForm {
+        public static class Types {
+            public static final int LEADERSHIP_EVALUATION_SCORE_FORM = 100;
+            public static final int LEADER_CADRE_EVALUATION_SCORE_FORM  = 200;
+            public static final int DEPARTMENT_CADRE_EVALUATION_SCORE_FORM  = 300;
+            public static final int PROFESSIONAL_EVALUATION_SCORE_FORM  = 400;
         }
     }
 }

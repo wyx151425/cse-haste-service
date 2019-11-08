@@ -17,9 +17,14 @@ public class EvaluationGroup extends HasteEntity {
      */
     private String name;
     /**
+     * 评分表类型
+     */
+    private Integer evaluationScoreFormType;
+    /**
      * 完成标志
      */
     private Boolean complete;
+    private LocalDateTime completeAt;
     /**
      * 考核评价计划
      */
@@ -56,12 +61,28 @@ public class EvaluationGroup extends HasteEntity {
         this.name = name;
     }
 
+    public Integer getEvaluationScoreFormType() {
+        return evaluationScoreFormType;
+    }
+
+    public void setEvaluationScoreFormType(Integer evaluationScoreFormType) {
+        this.evaluationScoreFormType = evaluationScoreFormType;
+    }
+
     public Boolean getComplete() {
         return complete;
     }
 
     public void setComplete(Boolean complete) {
         this.complete = complete;
+    }
+
+    public LocalDateTime getCompleteAt() {
+        return completeAt;
+    }
+
+    public void setCompleteAt(LocalDateTime completeAt) {
+        this.completeAt = completeAt;
     }
 
     public Integer getEvaluationPlanId() {

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,15 +23,17 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
     private final EvaluatorService evaluatorService;
     private final LeadershipScoreFormService leadershipScoreFormService;
     private final LeaderCadreScoreFormService leaderCadreScoreFormService;
+    private final DepartmentCadreScoreFormService departmentCadreScoreFormService;
     private final ProfessionalScoreFormService professionalScoreFormService;
 
     @Autowired
-    public EvaluationGroupServiceImpl(EvaluationGroupRepository evaluationGroupRepository, EvaluateeService evaluateeService, EvaluatorService evaluatorService, LeadershipScoreFormService leadershipScoreFormService, LeaderCadreScoreFormService leaderCadreScoreFormService, ProfessionalScoreFormService professionalScoreFormService) {
+    public EvaluationGroupServiceImpl(EvaluationGroupRepository evaluationGroupRepository, EvaluateeService evaluateeService, EvaluatorService evaluatorService, LeadershipScoreFormService leadershipScoreFormService, LeaderCadreScoreFormService leaderCadreScoreFormService, DepartmentCadreScoreFormService departmentCadreScoreFormService, ProfessionalScoreFormService professionalScoreFormService) {
         this.evaluationGroupRepository = evaluationGroupRepository;
         this.evaluateeService = evaluateeService;
         this.evaluatorService = evaluatorService;
         this.leadershipScoreFormService = leadershipScoreFormService;
         this.leaderCadreScoreFormService = leaderCadreScoreFormService;
+        this.departmentCadreScoreFormService = departmentCadreScoreFormService;
         this.professionalScoreFormService = professionalScoreFormService;
     }
 
@@ -55,7 +58,6 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
                 Evaluatee leadership = evaluateeService.findEvaluateesByEvaluationPlan(evaluationPlan.getId()).get(0);
                 for (Evaluator evaluator : evaluators) {
                     LeadershipScoreForm leadershipScoreForm = LeadershipScoreForm.newInstance();
-                    leadershipScoreForm.setType(Constant.EvaluationPlan.Types.LEADERSHIP_EVALUATION_PLAN);
                     leadershipScoreForm.setEvaluationGroup(evaluationGroup);
                     leadershipScoreForm.setEvaluatee(leadership);
                     leadershipScoreForm.setEvaluator(evaluator);
@@ -66,15 +68,29 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
                     for (Evaluator evaluator : evaluators) {
                         if (Constant.EvaluationPlan.Types.LEADER_CADRE_EVALUATION_PLAN == evaluationPlan.getType()) {
                             LeaderCadreScoreForm leaderCadreScoreForm = LeaderCadreScoreForm.newInstance();
-                            leaderCadreScoreForm.setType(Constant.EvaluationPlan.Types.LEADER_CADRE_EVALUATION_PLAN);
                             leaderCadreScoreForm.setEvaluationGroup(evaluationGroup);
                             leaderCadreScoreForm.setEvaluatee(evaluatee);
                             leaderCadreScoreForm.setEvaluator(evaluator);
                             leaderCadreScoreFormService.saveLeaderCadreScoreForm(leaderCadreScoreForm);
                         }
+                        if (Constant.EvaluationPlan.Types.DEPARTMENT_CADRE_EVALUATION_PLAN == evaluationPlan.getType()) {
+                            if (Constant.EvaluationScoreForm.Types.DEPARTMENT_CADRE_EVALUATION_SCORE_FORM == evaluationGroup.getEvaluationScoreFormType()) {
+                                DepartmentCadreScoreForm departmentCadreScoreForm = DepartmentCadreScoreForm.newInstance();
+                                departmentCadreScoreForm.setEvaluationGroup(evaluationGroup);
+                                departmentCadreScoreForm.setEvaluatee(evaluatee);
+                                departmentCadreScoreForm.setEvaluator(evaluator);
+                                departmentCadreScoreFormService.saveDepartmentCadreScoreForm(departmentCadreScoreForm);
+                            }
+                            if (Constant.EvaluationScoreForm.Types.LEADER_CADRE_EVALUATION_SCORE_FORM == evaluationGroup.getEvaluationScoreFormType()) {
+                                LeaderCadreScoreForm leaderCadreScoreForm = LeaderCadreScoreForm.newInstance();
+                                leaderCadreScoreForm.setEvaluationGroup(evaluationGroup);
+                                leaderCadreScoreForm.setEvaluatee(evaluatee);
+                                leaderCadreScoreForm.setEvaluator(evaluator);
+                                leaderCadreScoreFormService.saveLeaderCadreScoreForm(leaderCadreScoreForm);
+                            }
+                        }
                         if (Constant.EvaluationPlan.Types.PROFESSIONAL_EVALUATION_PLAN == evaluationPlan.getType()) {
                             ProfessionalScoreForm professionalScoreForm = ProfessionalScoreForm.newInstance();
-                            professionalScoreForm.setType(Constant.EvaluationPlan.Types.PROFESSIONAL_EVALUATION_PLAN);
                             professionalScoreForm.setEvaluationGroup(evaluationGroup);
                             professionalScoreForm.setEvaluatee(evaluatee);
                             professionalScoreForm.setEvaluator(evaluator);
@@ -93,6 +109,7 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
         evaluateeService.deleteEvaluateesByEvaluationGroup(id);
         leadershipScoreFormService.deleteLeadershipScoreFormsByEvaluationGroup(id);
         leaderCadreScoreFormService.deleteLeaderCadreScoreFormsByEvaluationGroup(id);
+        departmentCadreScoreFormService.deleteDepartmentCadreScoreFormsByEvaluationGroup(id);
         professionalScoreFormService.deleteProfessionalScoreFormsByEvaluationGroup(id);
         evaluationGroupRepository.delete(id);
     }
@@ -111,6 +128,7 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
     public EvaluationGroup submitEvaluationGroup(Integer id) {
         EvaluationGroup evaluationGroup = evaluationGroupRepository.findOneById(id);
         evaluationGroup.setComplete(true);
+        evaluationGroup.setCompleteAt(LocalDateTime.now().withNano(0));
         evaluationGroupRepository.update(evaluationGroup);
         return evaluationGroupRepository.findOneById(id);
     }

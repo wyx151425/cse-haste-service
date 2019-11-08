@@ -67,6 +67,7 @@ public class ProfessionalScoreForm extends EvaluationScoreForm {
         professionalScoreForm.setCreateAt(dateTime);
         professionalScoreForm.setUpdateAt(dateTime);
         professionalScoreForm.setComplete(false);
+        professionalScoreForm.setType(Constant.EvaluationScoreForm.Types.PROFESSIONAL_EVALUATION_SCORE_FORM);
         return professionalScoreForm;
     }
 

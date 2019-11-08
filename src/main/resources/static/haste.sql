@@ -33,6 +33,8 @@ CREATE TABLE `cse_evaluation_group` (
   `update_at` datetime,
   `name` varchar(32),
   `complete` bit(1),
+  `complete_at` datetime,
+  `evaluation_score_form_type` int(4),
   `evaluation_plan_id` int(11),
   `evaluation_plan_name` varchar(32),
   PRIMARY KEY (`id`)
@@ -122,6 +124,28 @@ CREATE TABLE `cse_leader_cadre_score_form` (
   `integrity_1` int(2),
   `integrity_2` int(2),
   `integrity_3` int(2),
+  `evaluator_id` int(11),
+  `evaluator_name` varchar(8),
+  `evaluatee_id` int(11),
+  `evaluatee_name` varchar(8),
+  `evaluation_group_id` int(11),
+  `evaluation_group_name` varchar(32),
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=UTF8;
+
+CREATE TABLE `cse_department_cadre_score_form` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `object_id` char(32),
+  `status` int(1),
+  `create_at` datetime,
+  `update_at` datetime,
+  `type` int(4),
+  `complete` bit(1),
+  `complete_at` datetime,
+  `politics_performance` int(2),
+  `ability_and_quality` int(2),
+  `work_performance` int(2),
+  `integrity` int(2),
   `evaluator_id` int(11),
   `evaluator_name` varchar(8),
   `evaluatee_id` int(11),

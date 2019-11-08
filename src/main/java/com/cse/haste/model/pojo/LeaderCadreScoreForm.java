@@ -78,7 +78,8 @@ public class LeaderCadreScoreForm extends EvaluationScoreForm {
         LocalDateTime dateTime = LocalDateTime.now();
         leaderCadreScoreForm.setCreateAt(dateTime);
         leaderCadreScoreForm.setUpdateAt(dateTime);
-        leaderCadreScoreForm.setComplete(true);
+        leaderCadreScoreForm.setComplete(false);
+        leaderCadreScoreForm.setType(Constant.EvaluationScoreForm.Types.LEADER_CADRE_EVALUATION_SCORE_FORM);
         return leaderCadreScoreForm;
     }
 

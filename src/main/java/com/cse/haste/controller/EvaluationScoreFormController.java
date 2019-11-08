@@ -2,10 +2,7 @@ package com.cse.haste.controller;
 
 import com.cse.haste.model.dto.Response;
 import com.cse.haste.model.pojo.*;
-import com.cse.haste.service.EvaluationScoreFormService;
-import com.cse.haste.service.LeaderCadreScoreFormService;
-import com.cse.haste.service.LeadershipScoreFormService;
-import com.cse.haste.service.ProfessionalScoreFormService;
+import com.cse.haste.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +18,15 @@ public class EvaluationScoreFormController extends HasteFacade {
     private final LeadershipScoreFormService leadershipScoreFormService;
     private final LeaderCadreScoreFormService leaderCadreScoreFormService;
     private final ProfessionalScoreFormService professionalScoreFormService;
+    private final DepartmentCadreScoreFormService departmentCadreScoreFormService;
     private final EvaluationScoreFormService evaluationScoreFormService;
 
     @Autowired
-    public EvaluationScoreFormController(LeadershipScoreFormService leadershipScoreFormService, LeaderCadreScoreFormService leaderCadreScoreFormService, ProfessionalScoreFormService professionalScoreFormService, EvaluationScoreFormService evaluationScoreFormService) {
+    public EvaluationScoreFormController(LeadershipScoreFormService leadershipScoreFormService, LeaderCadreScoreFormService leaderCadreScoreFormService, ProfessionalScoreFormService professionalScoreFormService, DepartmentCadreScoreFormService departmentCadreScoreFormService, EvaluationScoreFormService evaluationScoreFormService) {
         this.leadershipScoreFormService = leadershipScoreFormService;
         this.leaderCadreScoreFormService = leaderCadreScoreFormService;
         this.professionalScoreFormService = professionalScoreFormService;
+        this.departmentCadreScoreFormService = departmentCadreScoreFormService;
         this.evaluationScoreFormService = evaluationScoreFormService;
     }
 
@@ -40,6 +39,12 @@ public class EvaluationScoreFormController extends HasteFacade {
     @PutMapping(value = "leaderCadreScoreForms")
     public Response<LeaderCadreScoreForm> actionUpdateLeaderCadreScoreForm(@RequestBody LeaderCadreScoreForm leaderCadreScoreForm) {
         leaderCadreScoreFormService.updateLeaderCadreScoreForm(leaderCadreScoreForm);
+        return new Response<>();
+    }
+
+    @PutMapping(value = "departmentCadreScoreForms")
+    public Response<DepartmentCadreScoreForm> actionUpdateDepartmentCadreScoreForm(@RequestBody DepartmentCadreScoreForm departmentCadreScoreForm) {
+        departmentCadreScoreFormService.updateDepartmentCadreScoreForm(departmentCadreScoreForm);
         return new Response<>();
     }
 
@@ -61,6 +66,12 @@ public class EvaluationScoreFormController extends HasteFacade {
         return new Response<>(newLeaderCadreScoreForm);
     }
 
+    @PutMapping(value = "departmentCadreScoreForms/submit")
+    public Response<DepartmentCadreScoreForm> actionSubmitDepartmentCadreScoreForm(@RequestBody DepartmentCadreScoreForm departmentCadreScoreForm) {
+        DepartmentCadreScoreForm newDepartmentCadreScoreForm = departmentCadreScoreFormService.submitDepartmentCadreScoreForm(departmentCadreScoreForm);
+        return new Response<>(newDepartmentCadreScoreForm);
+    }
+
     @PutMapping(value = "professionalScoreForms/submit")
     public Response<ProfessionalScoreForm> actionSubmitProfessionalScoreForm(@RequestBody ProfessionalScoreForm professionalScoreForm) {
         ProfessionalScoreForm newProfessionalScoreForm = professionalScoreFormService.submitProfessionalScoreForm(professionalScoreForm);
@@ -79,6 +90,12 @@ public class EvaluationScoreFormController extends HasteFacade {
         return new Response<>(leaderCadreScoreForm);
     }
 
+    @GetMapping(value = "departmentCadreScoreForms/{id}")
+    public Response<DepartmentCadreScoreForm> actionQueryDepartmentCadreScoreFormsById(@PathVariable(value = "id") Integer id) {
+        DepartmentCadreScoreForm departmentCadreScoreForm = departmentCadreScoreFormService.findDepartmentCadreScoreFormById(id);
+        return new Response<>(departmentCadreScoreForm);
+    }
+
     @GetMapping(value = "professionalScoreForms/{id}")
     public Response<ProfessionalScoreForm> actionQueryProfessionalScoreFormsById(@PathVariable(value = "id") Integer id) {
         ProfessionalScoreForm professionalScoreForm = professionalScoreFormService.findProfessionalScoreFormById(id);
@@ -95,6 +112,12 @@ public class EvaluationScoreFormController extends HasteFacade {
     public Response<List<LeaderCadreScoreForm>> actionQueryLeaderCadreScoreFormsByEvaluator(@PathVariable(value = "evaluatorId") Integer evaluatorId) {
         List<LeaderCadreScoreForm> leaderCadreScoreForms = leaderCadreScoreFormService.findLeaderCadreScoreFormsByEvaluator(evaluatorId);
         return new Response<>(leaderCadreScoreForms);
+    }
+
+    @GetMapping(value = "evaluators/{evaluatorId}/departmentCadreScoreForms")
+    public Response<List<DepartmentCadreScoreForm>> actionQueryDepartmentCadreScoreFormsByEvaluator(@PathVariable(value = "evaluatorId") Integer evaluatorId) {
+        List<DepartmentCadreScoreForm> departmentCadreScoreForms = departmentCadreScoreFormService.findDepartmentCadreScoreFormsByEvaluator(evaluatorId);
+        return new Response<>(departmentCadreScoreForms);
     }
 
     @GetMapping(value = "evaluators/{evaluatorId}/professionalScoreForms")

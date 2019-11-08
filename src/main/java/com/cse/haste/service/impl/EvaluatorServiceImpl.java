@@ -25,18 +25,11 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 
     private final UserRepository userRepository;
     private final EvaluatorRepository evaluatorRepository;
-    private EvaluateeService evaluateeService;
 
     @Autowired
     public EvaluatorServiceImpl(UserRepository userRepository, EvaluatorRepository evaluatorRepository) {
         this.userRepository = userRepository;
         this.evaluatorRepository = evaluatorRepository;
-    }
-
-    @Autowired
-    @Lazy
-    public void setEvaluateeService(EvaluateeService evaluateeService) {
-        this.evaluateeService = evaluateeService;
     }
 
     @Override
