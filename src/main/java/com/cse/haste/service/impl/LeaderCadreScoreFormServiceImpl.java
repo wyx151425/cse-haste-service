@@ -98,4 +98,10 @@ public class LeaderCadreScoreFormServiceImpl implements LeaderCadreScoreFormServ
     public List<LeaderCadreScoreForm> findLeaderCadreScoreFormsByEvaluator(Integer evaluatorId) {
         return leaderCadreScoreFormRepository.findAllByEvaluatorId(evaluatorId);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<LeaderCadreScoreForm> findLeaderCadreScoreFormsByEvaluationGroupAndEvaluatee(Integer evaluationGroupId, Integer evaluateeId) {
+        return leaderCadreScoreFormRepository.findAllByEvaluationGroupIdAndEvaluateeId(evaluationGroupId, evaluateeId);
+    }
 }

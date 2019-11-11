@@ -98,4 +98,10 @@ public class ProfessionalScoreFormServiceImpl implements ProfessionalScoreFormSe
     public List<ProfessionalScoreForm> findProfessionalScoreFormsByEvaluator(Integer evaluatorId) {
         return professionalScoreFormRepository.findAllByEvaluatorId(evaluatorId);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<ProfessionalScoreForm> findProfessionalScoreFormsByEvaluationGroupAndEvaluatee(Integer evaluationGroupId, Integer evaluateeId) {
+        return professionalScoreFormRepository.findAllByEvaluationGroupIdAndEvaluateeId(evaluationGroupId, evaluateeId);
+    }
 }

@@ -70,4 +70,11 @@
         AND evaluator_id = #{evaluatorId}
     </select>
 
+    <select id="findAllByEvaluationGroupIdAndEvaluateeId" resultType="departmentCadreScoreForm">
+        SELECT
+        <include refid="cse_department_cadre_score_form_column"/>
+        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        AND evaluatee_id = #{evaluateeId}
+    </select>
+
 </mapper>

@@ -98,4 +98,10 @@ public class DepartmentCadreScoreFormServiceImpl implements DepartmentCadreScore
     public List<DepartmentCadreScoreForm> findDepartmentCadreScoreFormsByEvaluator(Integer evaluatorId) {
         return departmentCadreScoreFormRepository.findAllByEvaluatorId(evaluatorId);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<DepartmentCadreScoreForm> findDepartmentCadreScoreFormsByEvaluationGroupAndEvaluatee(Integer evaluationGroupId, Integer evaluateeId) {
+        return departmentCadreScoreFormRepository.findAllByEvaluationGroupIdAndEvaluateeId(evaluationGroupId, evaluateeId);
+    }
 }

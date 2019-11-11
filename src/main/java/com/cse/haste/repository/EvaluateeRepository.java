@@ -28,6 +28,16 @@ public interface EvaluateeRepository extends HasteRepository<Evaluatee, Integer>
     List<Evaluatee> findAllByEvaluationGroupId(Integer evaluationGroupId);
 
     /**
+     * 根据考核评价工作组ID和关联用户ID查询受评者
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param userId            关联用户ID
+     * @return 受评者
+     */
+    Evaluatee findAllByEvaluationGroupIdAndUserId(
+            @Param(value = "evaluationGroupId") Integer evaluationGroupId, @Param(value = "userId") Integer userId);
+
+    /**
      * 根据考核评价计划ID查询未分配到工作组的受评者
      *
      * @param evaluationPlanId 考核评价计划ID

@@ -70,4 +70,13 @@ public interface EvaluateeService {
      * @return 未选择的受评者数据集合
      */
     List<User> findNotSelectEvaluateesByEvaluationGroup(Integer evaluationGroupId);
+
+    /**
+     * 根据考核评价工作组和关联用户查询受评者
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param userId            关联用户ID
+     * @return 受评者
+     */
+    Evaluatee findEvaluateeByEvaluationGroupAndUser(Integer evaluationGroupId, Integer userId);
 }

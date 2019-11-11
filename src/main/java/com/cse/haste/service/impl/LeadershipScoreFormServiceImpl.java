@@ -99,4 +99,10 @@ public class LeadershipScoreFormServiceImpl implements LeadershipScoreFormServic
     public List<LeadershipScoreForm> findLeadershipScoreFormsByEvaluator(Integer evaluatorId) {
         return leadershipScoreFormRepository.findAllByEvaluatorId(evaluatorId);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<LeadershipScoreForm> findLeadershipScoreFormsByEvaluationGroupAndEvaluatee(Integer evaluationGroupId, Integer evaluateeId) {
+        return leadershipScoreFormRepository.findAllByEvaluationGroupIdAndEvaluateeId(evaluationGroupId, evaluateeId);
+    }
 }

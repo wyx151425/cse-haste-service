@@ -115,4 +115,10 @@ public class EvaluateeServiceImpl implements EvaluateeService {
         }
         return users;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public Evaluatee findEvaluateeByEvaluationGroupAndUser(Integer evaluationGroupId, Integer userId) {
+        return evaluateeRepository.findAllByEvaluationGroupIdAndUserId(evaluationGroupId, userId);
+    }
 }

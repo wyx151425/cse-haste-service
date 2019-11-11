@@ -1,11 +1,19 @@
 package com.cse.haste.controller;
 
+import com.cse.haste.context.HasteException;
+import com.cse.haste.model.dto.Excel;
 import com.cse.haste.model.dto.Response;
 import com.cse.haste.model.pojo.*;
 import com.cse.haste.service.*;
+import com.cse.haste.util.Constant;
+import com.cse.haste.util.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -136,5 +144,22 @@ public class EvaluationScoreFormController extends HasteFacade {
     public Response<List<EvaluationScoreForm>> actionQueryEvaluationScoreFormsByUser(@PathVariable(value = "userId") Integer userId) {
         List<EvaluationScoreForm> evaluationScoreForms = evaluationScoreFormService.findEvaluationScoreFormsByUser(userId);
         return new Response<>(evaluationScoreForms);
+    }
+
+    @PostMapping(value = "evaluationScoreForms/export")
+    public void actionExportEvaluationScoreFormByEvaluatee(@RequestBody Evaluatee evaluatee) {
+        Excel excel = evaluationScoreFormService.exportEvaluationScoreFormByEvaluatee(evaluatee);
+        try {
+            getResponse().reset();
+            getResponse().setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(excel.getName(), "UTF-8"));
+            getResponse().setContentType("application/octet-stream");
+            OutputStream out = getResponse().getOutputStream();
+            BufferedOutputStream buffer = new BufferedOutputStream(out);
+            buffer.flush();
+            excel.getWorkbook().write(buffer);
+            buffer.close();
+        } catch (IOException e) {
+            throw new HasteException(e, StatusCode.FILE_RESOLVE_ERROR);
+        }
     }
 }

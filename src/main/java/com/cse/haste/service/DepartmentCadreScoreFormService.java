@@ -69,4 +69,13 @@ public interface DepartmentCadreScoreFormService {
      * @return 中层干部评价评分表
      */
     List<DepartmentCadreScoreForm> findDepartmentCadreScoreFormsByEvaluator(Integer evaluatorId);
+
+    /**
+     * 根据考核评价工作组和受评者查询部门干部考核评分表
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param evaluateeId       受评者ID
+     * @return 部门干部考核评价表
+     */
+    List<DepartmentCadreScoreForm> findDepartmentCadreScoreFormsByEvaluationGroupAndEvaluatee(Integer evaluationGroupId, Integer evaluateeId);
 }

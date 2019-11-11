@@ -69,4 +69,13 @@ public interface LeadershipScoreFormService {
      * @return 领导班子评价评分表
      */
     List<LeadershipScoreForm> findLeadershipScoreFormsByEvaluator(Integer evaluatorId);
+
+    /**
+     * 根据考核评价工作组和受评者查询领导班子考核评分表
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param evaluateeId       受评者ID
+     * @return 领导班子考核评价表
+     */
+    List<LeadershipScoreForm> findLeadershipScoreFormsByEvaluationGroupAndEvaluatee(Integer evaluationGroupId, Integer evaluateeId);
 }

@@ -46,4 +46,14 @@ public interface LeadershipScoreFormRepository extends HasteRepository<Leadershi
      */
     List<LeadershipScoreForm> findAllByEvaluationGroupIdAndEvaluatorId(
             @Param(value = "evaluationGroupId") Integer evaluationGroupId, @Param(value = "evaluatorId") Integer evaluatorId);
+
+    /**
+     * 根据考核评价工作组和受评者查询领导班子考核评分表
+     *
+     * @param evaluationGroupId 考核评价工作组ID
+     * @param evaluateeId       受评者ID
+     * @return 领导班子考核评价表
+     */
+    List<LeadershipScoreForm> findAllByEvaluationGroupIdAndEvaluateeId(
+            @Param(value = "evaluationGroupId") Integer evaluationGroupId, @Param(value = "evaluateeId") Integer evaluateeId);
 }
