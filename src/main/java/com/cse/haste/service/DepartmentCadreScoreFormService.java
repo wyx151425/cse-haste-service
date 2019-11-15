@@ -1,6 +1,7 @@
 package com.cse.haste.service;
 
 import com.cse.haste.model.pojo.DepartmentCadreScoreForm;
+import com.cse.haste.model.pojo.EvaluationGroup;
 
 import java.util.List;
 
@@ -16,6 +17,13 @@ public interface DepartmentCadreScoreFormService {
     void saveDepartmentCadreScoreForm(DepartmentCadreScoreForm departmentCadreScoreForm);
 
     /**
+     * 删除评价者的评分表
+     *
+     * @param evaluatorId 评价者ID
+     */
+    void deleteDepartmentCadreScoreFormsByEvaluator(Integer evaluatorId);
+
+    /**
      * 根据考核评价计划组删除中层干部评价评分表
      *
      * @param evaluationGroupId 考核评价工作组ID
@@ -28,6 +36,13 @@ public interface DepartmentCadreScoreFormService {
      * @param departmentCadreScoreForm 中层干部评价评分表
      */
     void updateDepartmentCadreScoreForm(DepartmentCadreScoreForm departmentCadreScoreForm);
+
+    /**
+     * 通过evaluationGroupId字段更新EvaluationGroupName
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    void updateEvaluationGroupName(EvaluationGroup evaluationGroup);
 
     /**
      * 提交中层干部评价评分表

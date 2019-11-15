@@ -18,6 +18,17 @@
         UPDATE cse_user SET status = 0, update_at = NOW() WHERE id = #{id}
     </update>
 
+    <!-- 更新 -->
+    <update id="update" parameterType="user">
+        UPDATE cse_user
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="password != null">password = #{password},</if>
+            update_at = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
     <!-- 根据ID查询用户 -->
     <select id="findOneById" parameterType="int" resultType="user">
         SELECT
@@ -32,11 +43,25 @@
         FROM cse_user WHERE username = #{username}
     </select>
 
+    <!-- 查询全部用户 -->
+    <select id="findAll" resultType="user">
+        SELECT
+        <include refid="cse_user_column"/>
+        FROM cse_user WHERE status = 1 AND role = 'ROLE_USER'
+    </select>
+
     <!-- 根据角色查询用户 -->
     <select id="findAllByRole" parameterType="string" resultType="user">
         SELECT
         <include refid="cse_user_column"/>
         FROM cse_user WHERE status = 1 AND role = #{role}
+    </select>
+
+    <!-- 根据角色查询用户 -->
+    <select id="findAllByRoleAndNameLike" parameterType="string" resultType="user">
+        SELECT
+        <include refid="cse_user_column"/>
+        FROM cse_user WHERE status = 1 AND role = #{role} AND name LIKE CONCAT('%', #{name}, '%')
     </select>
 
     <!-- 查询ID在ID数组中的用户 -->
@@ -54,6 +79,16 @@
         SELECT
         <include refid="cse_user_column"/>
         FROM cse_user WHERE status = 1 AND role = 'ROLE_USER' AND id NOT IN
+        <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 查询ID不在ID数组中的用户 -->
+    <select id="findAllByIdNotInAndNameLike" resultType="user">
+        SELECT
+        <include refid="cse_user_column"/>
+        FROM cse_user WHERE status = 1 AND role = 'ROLE_USER' AND name LIKE CONCAT('%', #{name}, '%') AND id NOT IN
         <foreach collection="ids" index="index" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

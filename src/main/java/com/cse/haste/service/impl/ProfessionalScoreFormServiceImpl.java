@@ -1,5 +1,6 @@
 package com.cse.haste.service.impl;
 
+import com.cse.haste.model.pojo.EvaluationGroup;
 import com.cse.haste.model.pojo.ProfessionalScoreForm;
 import com.cse.haste.repository.ProfessionalScoreFormRepository;
 import com.cse.haste.service.EvaluationGroupService;
@@ -45,6 +46,15 @@ public class ProfessionalScoreFormServiceImpl implements ProfessionalScoreFormSe
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void deleteProfessionalScoreFormsByEvaluator(Integer evaluatorId) {
+        List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormRepository.findAllByEvaluatorId(evaluatorId);
+        for (ProfessionalScoreForm professionalScoreForm : professionalScoreForms) {
+            professionalScoreFormRepository.delete(professionalScoreForm.getId());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteProfessionalScoreFormsByEvaluationGroup(Integer evaluationGroupId) {
         List<ProfessionalScoreForm> professionalScoreForms = professionalScoreFormRepository.findAllByEvaluationGroupId(evaluationGroupId);
         for (ProfessionalScoreForm professionalScoreForm : professionalScoreForms) {
@@ -57,6 +67,12 @@ public class ProfessionalScoreFormServiceImpl implements ProfessionalScoreFormSe
     public void updateProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm) {
         professionalScoreForm.setComplete(false);
         professionalScoreFormRepository.update(professionalScoreForm);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEvaluationGroupName(EvaluationGroup evaluationGroup) {
+        professionalScoreFormRepository.updateEvaluationGroupNameByEvaluationGroupId(evaluationGroup);
     }
 
     @Override

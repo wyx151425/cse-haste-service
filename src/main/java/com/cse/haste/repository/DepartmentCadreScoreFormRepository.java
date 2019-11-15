@@ -1,6 +1,7 @@
 package com.cse.haste.repository;
 
 import com.cse.haste.model.pojo.DepartmentCadreScoreForm;
+import com.cse.haste.model.pojo.EvaluationGroup;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,13 @@ import java.util.List;
  */
 @Repository(value = "departmentCadreScoreFormRepository")
 public interface DepartmentCadreScoreFormRepository extends HasteRepository<DepartmentCadreScoreForm, Integer> {
+    /**
+     * 通过evaluationGroupId字段更新EvaluationGroupName
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    void updateEvaluationGroupNameByEvaluationGroupId(EvaluationGroup evaluationGroup);
+
     /**
      * 根据考核评价工作组ID查询中层干部评价评分表
      *

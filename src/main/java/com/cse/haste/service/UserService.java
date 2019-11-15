@@ -1,6 +1,7 @@
 package com.cse.haste.service;
 
 import com.cse.haste.model.pojo.User;
+import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,4 +36,19 @@ public interface UserService {
      * @param id 用户ID
      */
     void disableUser(Integer id);
+
+    /**
+     * 更新用户密码
+     *
+     * @param user 用户对象
+     */
+    User updateUserPassword(User user);
+
+    /**
+     * 分页查询用户
+     *
+     * @param pageNum 分页页码
+     * @return 查询到的用户
+     */
+    PageInfo<User> findAllUsers(Integer pageNum);
 }

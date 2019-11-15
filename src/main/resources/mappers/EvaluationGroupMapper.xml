@@ -30,8 +30,8 @@
 
     <!-- 保存 -->
     <insert id="save" parameterType="evaluationGroup" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cse_evaluation_group(object_id, status, create_at, update_at, name, evaluation_score_form_type, evaluation_plan_id, evaluation_plan_name)
-        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{name}, #{evaluationScoreFormType}, #{evaluationPlan.id}, #{evaluationPlan.name})
+        INSERT INTO cse_evaluation_group(object_id, status, create_at, update_at, name, complete, evaluation_score_form_type, evaluation_plan_id, evaluation_plan_name)
+        VALUES(#{objectId}, #{status}, NOW(), NOW(), #{name}, #{complete}, #{evaluationScoreFormType}, #{evaluationPlan.id}, #{evaluationPlan.name})
     </insert>
 
     <!-- 删除 -->

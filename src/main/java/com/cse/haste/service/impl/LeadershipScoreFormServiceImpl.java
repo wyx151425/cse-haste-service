@@ -1,5 +1,6 @@
 package com.cse.haste.service.impl;
 
+import com.cse.haste.model.pojo.EvaluationGroup;
 import com.cse.haste.model.pojo.LeadershipScoreForm;
 import com.cse.haste.repository.LeadershipScoreFormRepository;
 import com.cse.haste.service.EvaluationGroupService;
@@ -46,6 +47,15 @@ public class LeadershipScoreFormServiceImpl implements LeadershipScoreFormServic
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void deleteLeadershipScoreFormsByEvaluator(Integer evaluatorId) {
+        List<LeadershipScoreForm> leadershipScoreForms = leadershipScoreFormRepository.findAllByEvaluatorId(evaluatorId);
+        for (LeadershipScoreForm leadershipScoreForm : leadershipScoreForms) {
+            leadershipScoreFormRepository.delete(leadershipScoreForm.getId());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteLeadershipScoreFormsByEvaluationGroup(Integer evaluationGroupId) {
         List<LeadershipScoreForm> leadershipScoreForms = leadershipScoreFormRepository.findAllByEvaluationGroupId(evaluationGroupId);
         for (LeadershipScoreForm leadershipScoreForm : leadershipScoreForms) {
@@ -58,6 +68,12 @@ public class LeadershipScoreFormServiceImpl implements LeadershipScoreFormServic
     public void updateLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm) {
         leadershipScoreForm.setComplete(false);
         leadershipScoreFormRepository.update(leadershipScoreForm);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEvaluationGroupName(EvaluationGroup evaluationGroup) {
+        leadershipScoreFormRepository.updateEvaluationGroupNameByEvaluationGroupId(evaluationGroup);
     }
 
     @Override

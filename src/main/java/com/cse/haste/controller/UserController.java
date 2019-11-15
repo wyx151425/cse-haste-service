@@ -6,6 +6,7 @@ import com.cse.haste.model.pojo.User;
 import com.cse.haste.service.UserService;
 import com.cse.haste.util.Constant;
 import com.cse.haste.util.StatusCode;
+import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,5 +68,25 @@ public class UserController extends HasteFacade {
         }
         userService.disableUser(id);
         return new Response<>();
+    }
+
+    @PutMapping(value = "users/password")
+    public Response<User> actionUpdateUserPassword(@RequestBody User user) {
+        User currentUser = getCurrentUser();
+        if (!Constant.Roles.ADMIN.equals(currentUser.getRole())) {
+            throw new HasteException(StatusCode.USER_UNAUTHORIZED);
+        }
+        User target = userService.updateUserPassword(user);
+        return new Response<>(target);
+    }
+
+    @GetMapping(value = "users")
+    public Response<PageInfo<User>> actionQueryUsers(@RequestParam(value = "pageNum") Integer pageNum) {
+        User user = getCurrentUser();
+        if (!Constant.Roles.ADMIN.equals(user.getRole())) {
+            throw new HasteException(StatusCode.USER_UNAUTHORIZED);
+        }
+        PageInfo<User> pageInfo = userService.findAllUsers(pageNum);
+        return new Response<>(pageInfo);
     }
 }

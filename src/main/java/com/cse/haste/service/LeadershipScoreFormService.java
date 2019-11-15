@@ -1,5 +1,7 @@
 package com.cse.haste.service;
 
+import com.cse.haste.model.pojo.EvaluationGroup;
+import com.cse.haste.model.pojo.Evaluator;
 import com.cse.haste.model.pojo.LeadershipScoreForm;
 
 import java.util.List;
@@ -16,6 +18,13 @@ public interface LeadershipScoreFormService {
     void saveLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm);
 
     /**
+     * 删除评价者的评分表
+     *
+     * @param evaluatorId 评价者ID
+     */
+    void deleteLeadershipScoreFormsByEvaluator(Integer evaluatorId);
+
+    /**
      * 根据考核评价计划组删除领导班子评价评分表
      *
      * @param evaluationGroupId 考核评价工作组ID
@@ -28,6 +37,13 @@ public interface LeadershipScoreFormService {
      * @param leadershipScoreForm 领导班子评价评分表
      */
     void updateLeadershipScoreForm(LeadershipScoreForm leadershipScoreForm);
+
+    /**
+     * 通过evaluationGroupId字段更新EvaluationGroupName
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    void updateEvaluationGroupName(EvaluationGroup evaluationGroup);
 
     /**
      * 提交领导班子评价评分表

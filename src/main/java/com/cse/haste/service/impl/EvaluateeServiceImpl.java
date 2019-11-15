@@ -64,6 +64,12 @@ public class EvaluateeServiceImpl implements EvaluateeService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEvaluationGroupName(EvaluationGroup evaluationGroup) {
+        evaluateeRepository.updateEvaluationGroupNameByEvaluationGroupId(evaluationGroup);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
     public Evaluatee findEvaluateeById(Integer id) {
         return evaluateeRepository.findOneById(id);
@@ -76,16 +82,25 @@ public class EvaluateeServiceImpl implements EvaluateeService {
     }
 
     @Override
-    public List<User> findNotSelectEvaluateesByEvaluationPlan(Integer evaluationPlanId) {
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public List<User> findNotSelectEvaluateesByEvaluationPlanAndNameLike(Integer evaluationPlanId, String name) {
         List<Evaluatee> evaluatees = evaluateeRepository.findAllByEvaluationPlanId(evaluationPlanId);
         if (evaluatees.size() > 0) {
             List<Integer> ids = new ArrayList<>();
             for (Evaluatee evaluatee : evaluatees) {
                 ids.add(evaluatee.getUserId());
             }
-            return userRepository.findAllByIdNotIn(ids);
+            if (null != name) {
+                return userRepository.findAllByIdNotInAndNameLike(ids, name);
+            } else {
+                return userRepository.findAllByIdNotIn(ids);
+            }
         }
-        return userRepository.findAllByRole(Constant.Roles.USER);
+        if (null != name) {
+            return userRepository.findAllByRoleAndNameLike(Constant.Roles.USER, name);
+        } else {
+            return userRepository.findAllByRole(Constant.Roles.USER);
+        }
     }
 
     @Override
@@ -96,7 +111,7 @@ public class EvaluateeServiceImpl implements EvaluateeService {
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<User> findNotSelectEvaluateesByEvaluationGroup(Integer evaluationGroupId) {
+    public List<User> findNotSelectEvaluateesByEvaluationGroupAndNameLike(Integer evaluationGroupId, String name) {
         List<Evaluatee> notSelectEvaluatees;
         List<Evaluatee> evaluatees = evaluateeRepository.findAllByEvaluationGroupId(evaluationGroupId);
         EvaluationGroup evaluationGroup = evaluationGroupService.findEvaluationGroupById(evaluationGroupId);
@@ -105,9 +120,18 @@ public class EvaluateeServiceImpl implements EvaluateeService {
             for (Evaluatee evaluatee : evaluatees) {
                 ids.add(evaluatee.getUserId());
             }
-            notSelectEvaluatees = evaluateeRepository.findAllByEvaluationPlanIdAndUserIdNotIn(evaluationGroup.getEvaluationPlanId(), ids);
+            if (null != name) {
+                notSelectEvaluatees = evaluateeRepository.findAllByEvaluationPlanIdAndUserIdNotInAndNameLike(evaluationGroup.getEvaluationPlanId(), ids, name);
+            } else {
+                notSelectEvaluatees = evaluateeRepository.findAllByEvaluationPlanIdAndUserIdNotIn(evaluationGroup.getEvaluationPlanId(), ids);
+            }
+
         } else {
-            notSelectEvaluatees = evaluateeRepository.findAllByEvaluationPlanId(evaluationGroup.getEvaluationPlanId());
+            if (null != name) {
+                notSelectEvaluatees = evaluateeRepository.findAllByEvaluationPlanIdAndNameLike(evaluationGroup.getEvaluationPlanId(), name);
+            } else {
+                notSelectEvaluatees = evaluateeRepository.findAllByEvaluationPlanId(evaluationGroup.getEvaluationPlanId());
+            }
         }
         List<User> users = new ArrayList<>();
         for (Evaluatee evaluatee : notSelectEvaluatees) {

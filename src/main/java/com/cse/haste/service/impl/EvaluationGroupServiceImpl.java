@@ -125,6 +125,23 @@ public class EvaluationGroupServiceImpl implements EvaluationGroupService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public EvaluationGroup updateEvaluationGroupName(EvaluationGroup evaluationGroup) {
+        EvaluationGroup target = evaluationGroupRepository.findOneById(evaluationGroup.getId());
+        target.setName(evaluationGroup.getName());
+        evaluationGroupRepository.update(target);
+
+        evaluateeService.updateEvaluationGroupName(target);
+        evaluatorService.updateEvaluationGroupName(target);
+        leadershipScoreFormService.updateEvaluationGroupName(target);
+        leaderCadreScoreFormService.updateEvaluationGroupName(target);
+        departmentCadreScoreFormService.updateEvaluationGroupName(target);
+        professionalScoreFormService.updateEvaluationGroupName(target);
+
+        return evaluationGroupRepository.findOneById(evaluationGroup.getId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public EvaluationGroup submitEvaluationGroup(Integer id) {
         EvaluationGroup evaluationGroup = evaluationGroupRepository.findOneById(id);
         evaluationGroup.setComplete(true);

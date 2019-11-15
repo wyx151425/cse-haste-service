@@ -1,6 +1,7 @@
 package com.cse.haste.service.impl;
 
 import com.cse.haste.model.pojo.DepartmentCadreScoreForm;
+import com.cse.haste.model.pojo.EvaluationGroup;
 import com.cse.haste.repository.DepartmentCadreScoreFormRepository;
 import com.cse.haste.service.DepartmentCadreScoreFormService;
 import com.cse.haste.service.EvaluationGroupService;
@@ -45,6 +46,15 @@ public class DepartmentCadreScoreFormServiceImpl implements DepartmentCadreScore
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void deleteDepartmentCadreScoreFormsByEvaluator(Integer evaluatorId) {
+        List<DepartmentCadreScoreForm> departmentCadreScoreForms = departmentCadreScoreFormRepository.findAllByEvaluatorId(evaluatorId);
+        for (DepartmentCadreScoreForm departmentCadreScoreForm : departmentCadreScoreForms) {
+            departmentCadreScoreFormRepository.delete(departmentCadreScoreForm.getId());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteDepartmentCadreScoreFormsByEvaluationGroup(Integer evaluationGroupId) {
         List<DepartmentCadreScoreForm> departmentCadreScoreForms = departmentCadreScoreFormRepository.findAllByEvaluationGroupId(evaluationGroupId);
         for (DepartmentCadreScoreForm departmentCadreScoreForm : departmentCadreScoreForms) {
@@ -57,6 +67,12 @@ public class DepartmentCadreScoreFormServiceImpl implements DepartmentCadreScore
     public void updateDepartmentCadreScoreForm(DepartmentCadreScoreForm departmentCadreScoreForm) {
         departmentCadreScoreForm.setComplete(false);
         departmentCadreScoreFormRepository.update(departmentCadreScoreForm);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEvaluationGroupName(EvaluationGroup evaluationGroup) {
+        departmentCadreScoreFormRepository.updateEvaluationGroupNameByEvaluationGroupId(evaluationGroup);
     }
 
     @Override

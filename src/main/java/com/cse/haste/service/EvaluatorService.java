@@ -1,5 +1,6 @@
 package com.cse.haste.service;
 
+import com.cse.haste.model.pojo.EvaluationGroup;
 import com.cse.haste.model.pojo.Evaluator;
 import com.cse.haste.model.pojo.User;
 
@@ -32,6 +33,13 @@ public interface EvaluatorService {
     void deleteEvaluatorsByEvaluationGroup(Integer evaluationGroupId);
 
     /**
+     * 通过evaluationGroupId字段更新EvaluationGroupName
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    void updateEvaluationGroupName(EvaluationGroup evaluationGroup);
+
+    /**
      * 根据ID查询评价者
      *
      * @param id 评价者ID
@@ -55,11 +63,20 @@ public interface EvaluatorService {
      */
     List<Evaluator> findEvaluatorsByUser(Integer userId);
 
+//    /**
+//     * 查询未选择的评价者
+//     *
+//     * @param evaluationGroupId 考核评价工作组ID
+//     * @return 未选择的评价者数据集合
+//     */
+//    List<User> findNotSelectEvaluatorsByEvaluationGroup(Integer evaluationGroupId);
+
     /**
      * 查询未选择的评价者
      *
      * @param evaluationGroupId 考核评价工作组ID
+     * @param name              名称
      * @return 未选择的评价者数据集合
      */
-    List<User> findNotSelectEvaluatorsByEvaluationGroup(Integer evaluationGroupId);
+    List<User> findNotSelectEvaluatorsByEvaluationGroupAndNameLike(Integer evaluationGroupId, String name);
 }

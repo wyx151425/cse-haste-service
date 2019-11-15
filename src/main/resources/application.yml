@@ -16,6 +16,11 @@ mybatis:
     map-underscore-to-camel-case: true
   type-aliases-package: com.cse.haste.model.pojo
   mapper-locations: classpath:mappers/*.xml
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
 
 logging:
   level:

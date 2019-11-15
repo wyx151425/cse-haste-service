@@ -53,6 +53,12 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateEvaluationGroupNameByEvaluationGroupId" parameterType="evaluationGroup">
+        UPDATE cse_leader_cadre_score_form
+        SET evaluation_group_name = #{name}
+        where evaluation_group_id = #{id}
+    </update>
+
     <select id="findOneById" parameterType="int" resultType="leaderCadreScoreForm">
         SELECT
         <include refid="cse_leader_cadre_score_form_column"/>

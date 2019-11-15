@@ -1,12 +1,9 @@
 package com.cse.haste.service.impl;
 
-import com.cse.haste.model.pojo.Evaluatee;
-import com.cse.haste.model.pojo.Evaluator;
-import com.cse.haste.model.pojo.User;
+import com.cse.haste.model.pojo.*;
 import com.cse.haste.repository.EvaluatorRepository;
 import com.cse.haste.repository.UserRepository;
-import com.cse.haste.service.EvaluateeService;
-import com.cse.haste.service.EvaluatorService;
+import com.cse.haste.service.*;
 import com.cse.haste.util.Constant;
 import com.cse.haste.util.GeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +23,35 @@ public class EvaluatorServiceImpl implements EvaluatorService {
     private final UserRepository userRepository;
     private final EvaluatorRepository evaluatorRepository;
 
+    private LeadershipScoreFormService leadershipScoreFormService;
+    private LeaderCadreScoreFormService leaderCadreScoreFormService;
+    private DepartmentCadreScoreFormService departmentCadreScoreFormService;
+    private ProfessionalScoreFormService professionalScoreFormService;
+
     @Autowired
     public EvaluatorServiceImpl(UserRepository userRepository, EvaluatorRepository evaluatorRepository) {
         this.userRepository = userRepository;
         this.evaluatorRepository = evaluatorRepository;
+    }
+
+    @Autowired
+    public void setLeadershipScoreFormService(LeadershipScoreFormService leadershipScoreFormService) {
+        this.leadershipScoreFormService = leadershipScoreFormService;
+    }
+
+    @Autowired
+    public void setLeaderCadreScoreFormService(LeaderCadreScoreFormService leaderCadreScoreFormService) {
+        this.leaderCadreScoreFormService = leaderCadreScoreFormService;
+    }
+
+    @Autowired
+    public void setDepartmentCadreScoreFormService(DepartmentCadreScoreFormService departmentCadreScoreFormService) {
+        this.departmentCadreScoreFormService = departmentCadreScoreFormService;
+    }
+
+    @Autowired
+    public void setProfessionalScoreFormService(ProfessionalScoreFormService professionalScoreFormService) {
+        this.professionalScoreFormService = professionalScoreFormService;
     }
 
     @Override
@@ -45,6 +67,10 @@ public class EvaluatorServiceImpl implements EvaluatorService {
     @Transactional(rollbackFor = Exception.class)
     public void deleteEvaluator(Integer id) {
         evaluatorRepository.delete(id);
+        leadershipScoreFormService.deleteLeadershipScoreFormsByEvaluator(id);
+        leaderCadreScoreFormService.deleteLeaderCadreScoreFormsByEvaluator(id);
+        departmentCadreScoreFormService.deleteDepartmentCadreScoreFormsByEvaluator(id);
+        professionalScoreFormService.deleteProfessionalScoreFormsByEvaluator(id);
     }
 
     @Override
@@ -54,6 +80,12 @@ public class EvaluatorServiceImpl implements EvaluatorService {
         for (Evaluator evaluator : evaluators) {
             evaluatorRepository.delete(evaluator.getId());
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateEvaluationGroupName(EvaluationGroup evaluationGroup) {
+        evaluatorRepository.updateEvaluationGroupNameByEvaluationGroupId(evaluationGroup);
     }
 
     @Override
@@ -76,15 +108,23 @@ public class EvaluatorServiceImpl implements EvaluatorService {
 
     @Override
     @Transactional(rollbackFor = Exception.class, readOnly = true)
-    public List<User> findNotSelectEvaluatorsByEvaluationGroup(Integer evaluationGroupId) {
+    public List<User> findNotSelectEvaluatorsByEvaluationGroupAndNameLike(Integer evaluationGroupId, String name) {
         List<Evaluator> evaluators = evaluatorRepository.findAllByEvaluationGroupId(evaluationGroupId);
         if (evaluators.size() > 0) {
             List<Integer> ids = new ArrayList<>();
             for (Evaluator evaluator : evaluators) {
                 ids.add(evaluator.getUserId());
             }
-            return userRepository.findAllByIdNotIn(ids);
+            if (null != name) {
+                return userRepository.findAllByIdNotInAndNameLike(ids, name);
+            } else {
+                return userRepository.findAllByIdNotIn(ids);
+            }
         }
-        return userRepository.findAllByRole(Constant.Roles.USER);
+        if (null != name) {
+            return userRepository.findAllByRoleAndNameLike(Constant.Roles.USER, name);
+        } else {
+            return userRepository.findAllByRole(Constant.Roles.USER);
+        }
     }
 }

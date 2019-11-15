@@ -1,5 +1,6 @@
 package com.cse.haste.repository;
 
+import com.cse.haste.model.pojo.EvaluationGroup;
 import com.cse.haste.model.pojo.Evaluator;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,13 @@ import java.util.List;
  */
 @Repository(value = "evaluatorRepository")
 public interface EvaluatorRepository extends HasteRepository<Evaluator, Integer> {
+    /**
+     * 通过evaluationGroupId字段更新EvaluationGroupName
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    void updateEvaluationGroupNameByEvaluationGroupId(EvaluationGroup evaluationGroup);
+
     /**
      * 根据考核评价工作组查询评价者
      *

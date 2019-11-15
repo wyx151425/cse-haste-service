@@ -39,6 +39,13 @@ public interface EvaluationGroupService {
     void deleteEvaluationGroupsByEvaluationPlan(Integer evaluationPlanId);
 
     /**
+     * 更新考核评价工作组
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    EvaluationGroup updateEvaluationGroupName(EvaluationGroup evaluationGroup);
+
+    /**
      * 提交考核评价工作组
      *
      * @param id 考核评价工作组ID

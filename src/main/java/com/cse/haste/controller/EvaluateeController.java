@@ -57,12 +57,13 @@ public class EvaluateeController extends HasteFacade {
     }
 
     @GetMapping(value = "evaluationGroups/{evaluationGroupId}/notSelectEvaluatees")
-    public Response<List<User>> actionQueryNotSelectEvaluateesByEvaluationGroup(@PathVariable(value = "evaluationGroupId") Integer evaluationGroupId) {
+    public Response<List<User>> actionQueryNotSelectEvaluateesByEvaluationGroup(
+            @PathVariable(value = "evaluationGroupId") Integer evaluationGroupId, @RequestParam(value = "name", required = false) String name) {
         User user = getCurrentUser();
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
         }
-        List<User> users = evaluateeService.findNotSelectEvaluateesByEvaluationGroup(evaluationGroupId);
+        List<User> users = evaluateeService.findNotSelectEvaluateesByEvaluationGroupAndNameLike(evaluationGroupId, name);
         return new Response<>(users);
     }
 
@@ -77,12 +78,13 @@ public class EvaluateeController extends HasteFacade {
     }
 
     @GetMapping(value = "evaluationPlans/{evaluationPlanId}/notSelectEvaluatees")
-    public Response<List<User>> actionQueryNotSelectEvaluateesByEvaluationPlan(@PathVariable(value = "evaluationPlanId") Integer evaluationPlanId) {
+    public Response<List<User>> actionQueryNotSelectEvaluateesByEvaluationPlan(
+            @PathVariable(value = "evaluationPlanId") Integer evaluationPlanId, @RequestParam(value = "name", required = false) String name) {
         User user = getCurrentUser();
         if (!Constant.Roles.ADMIN.equals(user.getRole())) {
             throw new HasteException(StatusCode.USER_UNAUTHORIZED);
         }
-        List<User> users = evaluateeService.findNotSelectEvaluateesByEvaluationPlan(evaluationPlanId);
+        List<User> users = evaluateeService.findNotSelectEvaluateesByEvaluationPlanAndNameLike(evaluationPlanId, name);
         return new Response<>(users);
     }
 }

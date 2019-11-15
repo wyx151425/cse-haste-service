@@ -3,7 +3,6 @@ package com.cse.haste.controller;
 import com.cse.haste.context.HasteException;
 import com.cse.haste.model.dto.Response;
 import com.cse.haste.model.pojo.EvaluationGroup;
-import com.cse.haste.model.pojo.EvaluationPlan;
 import com.cse.haste.model.pojo.User;
 import com.cse.haste.service.EvaluationGroupService;
 import com.cse.haste.util.Constant;
@@ -45,6 +44,16 @@ public class EvaluationGroupController extends HasteFacade {
         }
         evaluationGroupService.deleteEvaluationGroup(id);
         return new Response<>();
+    }
+
+    @PutMapping(value = "evaluationGroups/name")
+    public Response<EvaluationGroup> actionUpdateEvaluationGroup(@RequestBody EvaluationGroup evaluationGroup) {
+        User user = getCurrentUser();
+        if (!Constant.Roles.ADMIN.equals(user.getRole())) {
+            throw new HasteException(StatusCode.USER_UNAUTHORIZED);
+        }
+        EvaluationGroup target = evaluationGroupService.updateEvaluationGroupName(evaluationGroup);
+        return new Response<>(target);
     }
 
     @GetMapping(value = "evaluationGroups/{id}")

@@ -28,6 +28,12 @@
         UPDATE cse_evaluator SET status = 0, update_at = NOW() WHERE id = #{id}
     </update>
 
+    <update id="updateEvaluationGroupNameByEvaluationGroupId" parameterType="evaluationGroup">
+        UPDATE cse_evaluator
+        SET evaluation_group_name = #{name}
+        where evaluation_group_id = #{id}
+    </update>
+
     <!-- 根据ID查询评价者 -->
     <select id="findOneById" parameterType="int" resultMap="evaluatorMap">
         SELECT

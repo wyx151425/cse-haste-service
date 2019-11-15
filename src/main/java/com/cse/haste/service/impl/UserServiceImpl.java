@@ -7,6 +7,8 @@ import com.cse.haste.model.pojo.User;
 import com.cse.haste.repository.UserRepository;
 import com.cse.haste.service.UserService;
 import com.cse.haste.util.*;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -101,5 +103,23 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public void disableUser(Integer id) {
         userRepository.delete(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public User updateUserPassword(User user) {
+        User target = userRepository.findOneById(user.getId());
+        target.setPassword(user.getPassword());
+        userRepository.update(target);
+
+        return userRepository.findOneById(user.getId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, readOnly = true)
+    public PageInfo<User> findAllUsers(Integer pageNum) {
+        PageHelper.startPage(pageNum, 20);
+        List<User> users = userRepository.findAll();
+        return new PageInfo<>(users);
     }
 }

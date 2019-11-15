@@ -1,5 +1,6 @@
 package com.cse.haste.service;
 
+import com.cse.haste.model.pojo.EvaluationGroup;
 import com.cse.haste.model.pojo.ProfessionalScoreForm;
 
 import java.util.List;
@@ -16,6 +17,13 @@ public interface ProfessionalScoreFormService {
     void saveProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm);
 
     /**
+     * 删除评价者的评分表
+     *
+     * @param evaluatorId 评价者ID
+     */
+    void deleteProfessionalScoreFormsByEvaluator(Integer evaluatorId);
+
+    /**
      * 根据考核评价计划组删除专业人才评价评分表
      *
      * @param evaluationGroupId 考核评价工作组ID
@@ -28,6 +36,13 @@ public interface ProfessionalScoreFormService {
      * @param professionalScoreForm 专业人才评价评分表
      */
     void updateProfessionalScoreForm(ProfessionalScoreForm professionalScoreForm);
+
+    /**
+     * 通过evaluationGroupId字段更新EvaluationGroupName
+     *
+     * @param evaluationGroup 考核评价工作组
+     */
+    void updateEvaluationGroupName(EvaluationGroup evaluationGroup);
 
     /**
      * 提交专业人才评价评分表
