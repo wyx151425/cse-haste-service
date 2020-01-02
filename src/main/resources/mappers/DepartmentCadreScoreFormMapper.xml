@@ -53,7 +53,7 @@
     <select id="findAllByEvaluationGroupId" parameterType="int" resultType="departmentCadreScoreForm">
         SELECT
         <include refid="cse_department_cadre_score_form_column"/>
-        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        FROM cse_department_cadre_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId} ORDER BY complete
     </select>
 
     <select id="findAllByEvaluatorId" parameterType="int" resultType="departmentCadreScoreForm">

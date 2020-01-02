@@ -1,5 +1,6 @@
 package com.cse.haste.service;
 
+import com.cse.haste.model.dto.EvaluationPlanExcel;
 import com.cse.haste.model.dto.Excel;
 import com.cse.haste.model.pojo.Evaluatee;
 import com.cse.haste.model.pojo.EvaluationScoreForm;
@@ -35,4 +36,12 @@ public interface EvaluationScoreFormService {
      * @return 编制完成的EXCEL表格
      */
     Excel exportEvaluationScoreFormByEvaluatee(Evaluatee evaluatee);
+
+    /**
+     * 导出评审计划所有的评分表
+     *
+     * @param evaluationPlanId 评审计划的ID
+     * @return 评分表
+     */
+    EvaluationPlanExcel exportEvaluationScoreFormsByEvaluationPlan(Integer evaluationPlanId);
 }

@@ -43,7 +43,7 @@
     <select id="findAll" resultType="evaluationPlan">
         SELECT
         <include refid="cse_evaluation_plan_column"/>
-        FROM cse_evaluation_plan WHERE status = 1
+        FROM cse_evaluation_plan WHERE status = 1 ORDER BY stage, create_at
     </select>
 
 </mapper>

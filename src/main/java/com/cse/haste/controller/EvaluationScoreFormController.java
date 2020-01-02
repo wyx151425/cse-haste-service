@@ -1,6 +1,7 @@
 package com.cse.haste.controller;
 
 import com.cse.haste.context.HasteException;
+import com.cse.haste.model.dto.EvaluationPlanExcel;
 import com.cse.haste.model.dto.Excel;
 import com.cse.haste.model.dto.Response;
 import com.cse.haste.model.pojo.*;
@@ -10,11 +11,11 @@ import com.cse.haste.util.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @author WangZhenqi
@@ -160,6 +161,45 @@ public class EvaluationScoreFormController extends HasteFacade {
             buffer.close();
         } catch (IOException e) {
             throw new HasteException(e, StatusCode.FILE_RESOLVE_ERROR);
+        }
+    }
+
+    @PostMapping(value = "evaluationPlans/{evaluationPlanId}/evaluationScoreForms/export")
+    public void actionExportEvaluationScoreFormByEvaluationPlan(@PathVariable(value = "evaluationPlanId") Integer evaluationPlanId) {
+        EvaluationPlanExcel evaluationPlanExcel = evaluationScoreFormService.exportEvaluationScoreFormsByEvaluationPlan(evaluationPlanId);
+        ZipOutputStream zipOutStr = null;
+        try {
+            getResponse().reset();
+            getResponse().setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(evaluationPlanExcel.getEvaluationPlanName() + ".zip", "UTF-8"));
+            getResponse().setContentType("application/octet-stream");
+            OutputStream out = getResponse().getOutputStream();
+            BufferedOutputStream buffer = new BufferedOutputStream(out);
+            buffer.flush();
+            zipOutStr = new ZipOutputStream(buffer);
+            for (Excel excel : evaluationPlanExcel.getExcels()) {
+                File file = File.createTempFile("file-", ".xlsx");
+                FileOutputStream fos = new FileOutputStream(file);
+                excel.getWorkbook().write(fos);
+                zipOutStr.putNextEntry(new ZipEntry(excel.getName() + ".xlsx"));
+                FileInputStream fis = new FileInputStream(file);
+                int len;
+                byte[] bytes = new byte[2048];
+                while ((len = fis.read(bytes)) != -1) {
+                    zipOutStr.write(bytes, 0, len);
+                }
+                zipOutStr.closeEntry();
+            }
+            buffer.close();
+        } catch (IOException e) {
+            throw new HasteException(e, StatusCode.FILE_RESOLVE_ERROR);
+        } finally {
+            if (null != zipOutStr) {
+                try {
+                    zipOutStr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

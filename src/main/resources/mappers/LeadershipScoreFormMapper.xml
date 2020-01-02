@@ -68,7 +68,7 @@
     <select id="findAllByEvaluationGroupId" parameterType="int" resultType="leadershipScoreForm">
         SELECT
         <include refid="cse_leadership_score_form_column"/>
-        FROM cse_leadership_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId}
+        FROM cse_leadership_score_form WHERE status = 1 AND evaluation_group_id = #{evaluationGroupId} ORDER BY complete
     </select>
 
     <select id="findAllByEvaluatorId" parameterType="int" resultType="leadershipScoreForm">

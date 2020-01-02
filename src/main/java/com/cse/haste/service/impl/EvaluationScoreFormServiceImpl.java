@@ -1,5 +1,6 @@
 package com.cse.haste.service.impl;
 
+import com.cse.haste.model.dto.EvaluationPlanExcel;
 import com.cse.haste.model.dto.Excel;
 import com.cse.haste.model.pojo.*;
 import com.cse.haste.service.*;
@@ -74,6 +75,20 @@ public class EvaluationScoreFormServiceImpl implements EvaluationScoreFormServic
         evaluationScoreForms.addAll(leaderCadreScoreForms);
         evaluationScoreForms.addAll(departmentCadreScoreForms);
         evaluationScoreForms.addAll(professionalScoreForms);
+
+        evaluationScoreForms.sort(new Comparator<EvaluationScoreForm>() {
+            @Override
+            public int compare(EvaluationScoreForm o1, EvaluationScoreForm o2) {
+                if (o1.getComplete() && !o2.getComplete()) {
+                    return 1;
+                } else if (!o1.getComplete() && o2.getComplete()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
         return evaluationScoreForms;
     }
 
@@ -99,7 +114,7 @@ public class EvaluationScoreFormServiceImpl implements EvaluationScoreFormServic
                     return 1;
                 } else if (!o1.getComplete() && o2.getComplete()) {
                     return -1;
-                } else  {
+                } else {
                     return 0;
                 }
             }
@@ -126,6 +141,18 @@ public class EvaluationScoreFormServiceImpl implements EvaluationScoreFormServic
         }
 
         return excel;
+    }
+
+    @Override
+    public EvaluationPlanExcel exportEvaluationScoreFormsByEvaluationPlan(Integer evaluationPlanId) {
+        EvaluationPlan evaluationPlan = evaluationPlanService.findEvaluationPlanById(evaluationPlanId);
+        List<Evaluatee> evaluatees = evaluateeService.findEvaluateesByEvaluationPlan(evaluationPlanId);
+        List<Excel> excels = new ArrayList<>();
+        for (Evaluatee evaluatee : evaluatees) {
+            Excel excel = exportEvaluationScoreFormByEvaluatee(evaluatee);
+            excels.add(excel);
+        }
+        return new EvaluationPlanExcel(evaluationPlan.getName(), excels);
     }
 
     private Excel createLeadershipScoreStatisticExcel(Evaluatee planEvaluatee, List<EvaluationGroup> evaluationGroups) {
