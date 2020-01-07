@@ -101,7 +101,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>CSEHASTEPRO</finalName>
+        <finalName>CSECAESPRO</finalName>
     </build>
 
 </project>
